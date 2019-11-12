@@ -79,12 +79,34 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="前言 数据：10X官方提供的PBMC数据集，2700个外周血单核细胞（PBMC，Peripheral Blood Mononuclear Cells）公共数据，使用Illumina NextSeq 500测序。 R包：Seurat 原始教程和代码：Seurat - Guided Clustering Tutorial 1234hg19|__barcodes.tsv|__genes.tsv|__m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Seurat-单细胞分群">
+<meta property="og:url" content="http://yoursite.com/2019/11/12/Seurat-单细胞分群/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言 数据：10X官方提供的PBMC数据集，2700个外周血单核细胞（PBMC，Peripheral Blood Mononuclear Cells）公共数据，使用Illumina NextSeq 500测序。 R包：Seurat 原始教程和代码：Seurat - Guided Clustering Tutorial 1234hg19|__barcodes.tsv|__genes.tsv|__m">
+<meta property="og:image" content="d:/singlecell/MicrofluidicsAndSingleCellAnalysisTraining/D2-4/output/RplotVlinPlot_percentage_MT.png">
+<meta property="og:image" content="d:/singlecell/MicrofluidicsAndSingleCellAnalysisTraining/D2-4/output/Rplot_combinePlots_scatter.png">
+<meta property="og:image" content="d:/singlecell/MicrofluidicsAndSingleCellAnalysisTraining/D2-4/output/Rplot_VariableFeaturePlot_Top10HVGs.png">
+<meta property="og:image" content="d:/singlecell/MicrofluidicsAndSingleCellAnalysisTraining/D2-4/output/VizDimLoading.png">
+<meta property="og:image" content="d:/singlecell/MicrofluidicsAndSingleCellAnalysisTraining/D2-4/output/DimPlot.png">
+<meta property="og:image" content="d:/singlecell/MicrofluidicsAndSingleCellAnalysisTraining/D2-4/output/DimHeatMap1.png">
+<meta property="og:image" content="d:/singlecell/MicrofluidicsAndSingleCellAnalysisTraining/D2-4/output/DimHeatMap15.png">
+<meta property="og:image" content="d:/singlecell/MicrofluidicsAndSingleCellAnalysisTraining/D2-4/output/ElbowPlot.png">
+<meta property="og:image" content="d:/singlecell/MicrofluidicsAndSingleCellAnalysisTraining/D2-4/output/Rplot_tsne.png">
+<meta property="og:image" content="d:/singlecell/MicrofluidicsAndSingleCellAnalysisTraining/D2-4/output/Rplot_umap.png">
+<meta property="og:image" content="d:/singlecell/MicrofluidicsAndSingleCellAnalysisTraining/D2-4/output/Rplot_cluster_tsne.png">
+<meta property="og:image" content="d:/singlecell/MicrofluidicsAndSingleCellAnalysisTraining/D2-4/output/FeaturePlot.png">
+<meta property="og:image" content="d:/singlecell/MicrofluidicsAndSingleCellAnalysisTraining/D2-4/output/Rplot_vln.png">
+<meta property="og:image" content="d:/singlecell/MicrofluidicsAndSingleCellAnalysisTraining/D2-4/output/Rplot_vln2.png">
+<meta property="og:image" content="d:/singlecell/MicrofluidicsAndSingleCellAnalysisTraining/D2-4/output/DoHeatMap.png">
+<meta property="og:image" content="d:/singlecell/MicrofluidicsAndSingleCellAnalysisTraining/D2-4/output/DotPlot.png">
+<meta property="og:image" content="d:/singlecell/MicrofluidicsAndSingleCellAnalysisTraining/D2-4/output/Ridge_Plot.png">
+<meta property="og:updated_time" content="2019-11-12T15:58:01.137Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="Seurat-单细胞分群">
+<meta name="twitter:description" content="前言 数据：10X官方提供的PBMC数据集，2700个外周血单核细胞（PBMC，Peripheral Blood Mononuclear Cells）公共数据，使用Illumina NextSeq 500测序。 R包：Seurat 原始教程和代码：Seurat - Guided Clustering Tutorial 1234hg19|__barcodes.tsv|__genes.tsv|__m">
+<meta name="twitter:image" content="d:/singlecell/MicrofluidicsAndSingleCellAnalysisTraining/D2-4/output/RplotVlinPlot_percentage_MT.png">
 
 
 
@@ -114,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/11/12/Seurat-单细胞分群/"/>
 
 
 
 
 
-  <title>Hexo</title>
+  <title>Seurat-单细胞分群 | Hexo</title>
   
 
 
@@ -139,8 +161,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -233,9 +254,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -265,9 +286,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/11/12/Seurat-单细胞分群/" itemprop="url">Seurat-单细胞分群</a></h1>
+          <h1 class="post-title" itemprop="name headline">Seurat-单细胞分群</h1>
         
 
         <div class="post-meta">
@@ -317,9 +336,7 @@
       
 
       
-        
-          
-            <ol>
+        <ol>
 <li><p>前言</p>
 <p>数据：10X官方提供的<a href="https://s3-us-west-2.amazonaws.com/10x.files/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz" target="_blank" rel="external">PBMC数据集</a>，2700个外周血单核细胞（PBMC，Peripheral Blood Mononuclear Cells）公共数据，使用Illumina NextSeq 500测序。</p>
 <p>R包：Seurat</p>
@@ -599,8 +616,6 @@
 <p>[3] <a href="https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html" target="_blank" rel="external">Seurat - Guided Clustering Tutorial</a></p>
 <p>[4] <a href="http://www.360doc.com/content/19/0906/16/65172408_859509927.shtml" target="_blank" rel="external">一文读懂单细胞测序分析流程</a></p>
 
-          
-        
       
     </div>
     
@@ -617,160 +632,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/30/车牌识别-TensorFlow-(1-克隆运行)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Jie Wang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/30/车牌识别-TensorFlow-(1-克隆运行)/" itemprop="url">车牌识别-TensorFlow (1-克隆运行)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-30T13:42:23+08:00">
-                2017-10-30
-              </time>
+              <a href="/2017/10/30/车牌识别-TensorFlow-(1-克隆运行)/" rel="next" title="车牌识别-TensorFlow (1-克隆运行)">
+                <i class="fa fa-chevron-left"></i> 车牌识别-TensorFlow (1-克隆运行)
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/车牌识别/" itemprop="url" rel="index">
-                    <span itemprop="name">车牌识别</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h2 id="克隆代码"><a href="#克隆代码" class="headerlink" title="克隆代码"></a>克隆代码</h2><p>从github仓库克隆代码到本地</p>
-<p>更改：适应更新的python(print)和tensorflow(label……)版本，以及window环境(fname.split(“\\”)[1])</p>
-<h2 id="运行调试"><a href="#运行调试" class="headerlink" title="运行调试"></a>运行调试</h2><p>说明：已经配置好环境，版本Python3.5，TensorFlow1.x，OpenCV3</p>
-<h3 id="1-导入背景图片"><a href="#1-导入背景图片" class="headerlink" title="1.导入背景图片"></a>1.导入背景图片</h3><p>下载[SUN397.tar.gz]</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python extratbgs.py SUN397.tar.gz</div></pre></td></tr></table></figure>
-<h3 id="2-合成训练图片"><a href="#2-合成训练图片" class="headerlink" title="2.合成训练图片"></a>2.合成训练图片</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
-<h3 id="3-训练"><a href="#3-训练" class="headerlink" title="3.训练"></a>3.训练</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
-<h3 id="4-识别"><a href="#4-识别" class="headerlink" title="4.识别"></a>4.识别</h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -780,301 +663,11 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/28/车牌识别-TensorFlow-(0-环境配置)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Jie Wang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/28/车牌识别-TensorFlow-(0-环境配置)/" itemprop="url">车牌识别-TensorFlow (0-环境配置)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-28T17:33:21+08:00">
-                2017-10-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/车牌识别/" itemprop="url" rel="index">
-                    <span itemprop="name">车牌识别</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="环境要求"><a href="#环境要求" class="headerlink" title="环境要求"></a>环境要求</h2><p>Python, TensorFlow,  OpenCV, NumPy</p>
-<h2 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h2><p>说明：基于Anaconda来搭建开发环境, Windows系统</p>
-<p>前提：已经安装好 <a href="https://www.anaconda.com/download/" target="_blank" rel="external">Anaconda</a>，打开cmd<code>conda --version</code>可以正确显示版本号</p>
-<h3 id="安装Python3-5"><a href="#安装Python3-5" class="headerlink" title="安装Python3.5"></a>安装Python3.5</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">conda create --name python35 python=3.5</div><div class="line"><span class="comment"># conda info --envs</span></div><div class="line">activate python35</div><div class="line"><span class="comment"># python --version</span></div><div class="line"><span class="comment"># deactivate python34</span></div><div class="line"><span class="comment"># conda remove --name python35</span></div><div class="line"></div><div class="line"><span class="comment"># conda list</span></div><div class="line"><span class="comment"># conda list -n python35</span></div><div class="line"><span class="comment"># conda search numpy</span></div><div class="line"><span class="comment"># conda install -n python35 numpy</span></div><div class="line"><span class="comment"># conda update -n python35 numpy</span></div><div class="line"><span class="comment"># conda remove -n python35 numpy</span></div><div class="line"><span class="comment"># conda update conda</span></div><div class="line">conda install anaconda</div><div class="line"><span class="comment"># conda update anaconda</span></div><div class="line"><span class="comment"># conda update python</span></div></pre></td></tr></table></figure>
-<h3 id="安装Tensorflow"><a href="#安装Tensorflow" class="headerlink" title="安装Tensorflow"></a>安装Tensorflow</h3><p>参见<a href="https://www.tensorflow.org/install/install_windows" target="_blank" rel="external">官网Installing with Anaconda</a></p>
-<p>CPU版本</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install --ignore-installed --upgrade tensorflow</div></pre></td></tr></table></figure>
-<h3 id="安装OpenCV"><a href="#安装OpenCV" class="headerlink" title="安装OpenCV"></a>安装OpenCV</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">conda install --channel https://conda.anaconda.org/menpo opencv3</div></pre></td></tr></table></figure>
-
-          
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/28/HELLO-WORLD-0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Jie Wang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/28/HELLO-WORLD-0/" itemprop="url">HELLO WORLD</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-28T02:17:21+08:00">
-                2017-10-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Other/" itemprop="url" rel="index">
-                    <span itemprop="name">Other</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>HELLO WORLD! —WJ</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -1082,6 +675,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -1303,6 +900,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
