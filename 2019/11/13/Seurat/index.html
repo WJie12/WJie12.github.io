@@ -86,28 +86,28 @@
 <meta property="og:site_name" content="WJie2">
 <meta property="og:description" content="前言  数据：10X官方提供的PBMC数据集，2700个外周血单核细胞（PBMC，Peripheral Blood Mononuclear Cells）公共数据，使用Illumina NextSeq 500测序。  原始教程和代码：Seurat - Guided Clustering Tutorial  1234hg19|__barcodes.tsv|__genes.tsv|__matrix.m">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Seurat/pic/RplotVlinPlot_percentage_MT.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Seurat/pic/Rplot_combinePlots_scatter.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Seurat/pic/Rplot_VariableFeaturePlot_Top10HVGs.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Seurat/pic/VizDimLoading.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Seurat/pic/DimPlot.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Seurat/pic/DimHeatMap1.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Seurat/pic/DimHeatMap15.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Seurat/pic/ElbowPlot.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Seurat/pic/Rplot_tsne.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Seurat/pic/Rplot_umap.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Seurat/pic/Rplot_cluster_tsne.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Seurat/pic/FeaturePlot.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Seurat/pic/Rplot_vln.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Seurat/pic/Rplot_vln2.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Seurat/pic/DoHeatMap.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Seurat/pic/DotPlot.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Seurat/pic/Ridge_Plot.png">
-<meta property="og:updated_time" content="2019-11-13T09:41:29.675Z">
+<meta property="og:image" content="http://yoursite.com/pic/RplotVlinPlot_percentage_MT.png">
+<meta property="og:image" content="http://yoursite.com/pic/Rplot_combinePlots_scatter.png">
+<meta property="og:image" content="http://yoursite.com/pic/Rplot_VariableFeaturePlot_Top10HVGs.png">
+<meta property="og:image" content="http://yoursite.com/pic/VizDimLoading.png">
+<meta property="og:image" content="http://yoursite.com/pic/DimPlot.png">
+<meta property="og:image" content="http://yoursite.com/pic/DimHeatMap1.png">
+<meta property="og:image" content="http://yoursite.com/pic/DimHeatMap15.png">
+<meta property="og:image" content="http://yoursite.com/pic/ElbowPlot.png">
+<meta property="og:image" content="http://yoursite.com/pic/Rplot_tsne.png">
+<meta property="og:image" content="http://yoursite.com/pic/Rplot_umap.png">
+<meta property="og:image" content="http://yoursite.com/pic/Rplot_cluster_tsne.png">
+<meta property="og:image" content="http://yoursite.com/pic/FeaturePlot.png">
+<meta property="og:image" content="http://yoursite.com/pic/Rplot_vln.png">
+<meta property="og:image" content="http://yoursite.com/pic/Rplot_vln2.png">
+<meta property="og:image" content="http://yoursite.com/pic/DoHeatMap.png">
+<meta property="og:image" content="http://yoursite.com/pic/DotPlot.png">
+<meta property="og:image" content="http://yoursite.com/pic/Ridge_Plot.png">
+<meta property="og:updated_time" content="2019-11-13T09:50:12.203Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Seurat单细胞分群">
 <meta name="twitter:description" content="前言  数据：10X官方提供的PBMC数据集，2700个外周血单核细胞（PBMC，Peripheral Blood Mononuclear Cells）公共数据，使用Illumina NextSeq 500测序。  原始教程和代码：Seurat - Guided Clustering Tutorial  1234hg19|__barcodes.tsv|__genes.tsv|__matrix.m">
-<meta name="twitter:image" content="http://yoursite.com/2019/11/13/Seurat/pic/RplotVlinPlot_percentage_MT.png">
+<meta name="twitter:image" content="http://yoursite.com/pic/RplotVlinPlot_percentage_MT.png">
 
 
 
@@ -402,14 +402,14 @@
 <p>线粒体占比percent.mt：小于5%</p>
 </blockquote>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; VlnPlot(pbmc, features = c(<span class="string">"nFeature_RNA"</span>, <span class="string">"nCount_RNA"</span>, <span class="string">"percent.mt"</span>), ncol = <span class="number">3</span>)</div></pre></td></tr></table></figure>
-<p><img src="pic/RplotVlinPlot_percentage_MT.png" alt="RplotVlinPlot_percentage_MT"></p>
+<p><img src="/pic/RplotVlinPlot_percentage_MT.png" alt="RplotVlinPlot_percentage_MT"></p>
 <p>用散点图（FeatureScatter）来绘制两组feature信息的相关性,组合在一起（CombinePlots）显示</p>
 <blockquote>
 <p>左图：reads count值和在线粒体的reads数量一般成反比，线粒体reads占比很高的情况一般有表达量的reads数很少</p>
 <p>右图：基因(feature)数量一般会和reads count值成正比</p>
 </blockquote>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt; plot1 &lt;- FeatureScatter(pbmc, feature1 = <span class="string">"nCount_RNA"</span>, feature2 = <span class="string">"percent.mt"</span>)</div><div class="line">&gt; plot2 &lt;- FeatureScatter(pbmc, feature1 = <span class="string">"nCount_RNA"</span>, feature2 = <span class="string">"nFeature_RNA"</span>)</div><div class="line">&gt; CombinePlots(plots = list(plot1, plot2))</div></pre></td></tr></table></figure>
-<p><img src="pic/Rplot_combinePlots_scatter.png" alt="Rplot_combinePlots_scatter"></p>
+<p><img src="/pic/Rplot_combinePlots_scatter.png" alt="Rplot_combinePlots_scatter"></p>
 <p>过滤细胞：</p>
 <blockquote>
 <p>保留gene数大于200小于2500的细胞，目的是去掉空GEMs和1个GEMs包含2个以上细胞的数</p>
@@ -445,7 +445,7 @@
 <p>右图：在左图基础上标出表达量变变化最高的10个基因</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">plot1 &lt;- VariableFeaturePlot(pbmc)</div><div class="line">plot2 &lt;- LabelPoints(plot = plot1, points = top10, repel = TRUE)</div><div class="line">CombinePlots(plots = list(plot1, plot2))</div></pre></td></tr></table></figure>
-<p><img src="pic/Rplot_VariableFeaturePlot_Top10HVGs.png" alt="Rplot_VariableFeaturePlot_Top10HVGs"></p>
+<p><img src="/pic/Rplot_VariableFeaturePlot_Top10HVGs.png" alt="Rplot_VariableFeaturePlot_Top10HVGs"></p>
 </li>
 </ol>
 <ol>
@@ -483,7 +483,7 @@
 <p>展示前两个PC里主成分基因的值</p>
 </blockquote>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; VizDimLoadings(pbmc, dims = <span class="number">1</span>:<span class="number">2</span>, reduction = <span class="string">"pca"</span>)</div></pre></td></tr></table></figure>
-<p><img src="pic/VizDimLoading.png" alt="VizDimLoading"></p>
+<p><img src="/pic/VizDimLoading.png" alt="VizDimLoading"></p>
 <p>可视化降维后的结果</p>
 <blockquote>
 <p>DimPlot:</p>
@@ -494,7 +494,7 @@
 <p>降维后的数据在 <code>cell.embeddings</code>中，可以打印出来</p>
 </blockquote>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt; DimPlot(pbmc, reduction = <span class="string">"pca"</span>)</div><div class="line">&gt; head(pbmc[[<span class="string">'pca'</span>]]@cell.embeddings)[<span class="number">1</span>:<span class="number">2</span>,<span class="number">1</span>:<span class="number">2</span>]</div><div class="line">                     PC_1       PC_2</div><div class="line">AAACATACAACCAC -<span class="number">4.2153796</span> -<span class="number">0.8006517</span></div><div class="line">AAACATTGAGCTAC  <span class="number">0.9503998</span> -<span class="number">3.0434884</span></div></pre></td></tr></table></figure>
-<p><img src="pic/DimPlot.png" alt="DimPlot"></p>
+<p><img src="/pic/DimPlot.png" alt="DimPlot"></p>
 <p>画第一个主成分的热图</p>
 <blockquote>
 <p>默认画前30个基因，可以通过nFeatures设置</p>
@@ -503,9 +503,9 @@
 <p>balanced：TRUE表示正负得分的基因各占一半</p>
 </blockquote>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; DimHeatmap(pbmc, dims = <span class="number">1</span>, cells = <span class="number">500</span>, balanced = <span class="literal">TRUE</span>)</div></pre></td></tr></table></figure>
-<p><img src="pic/DimHeatMap1.png" alt="DimHeatMap1"></p>
+<p><img src="/pic/DimHeatMap1.png" alt="DimHeatMap1"></p>
 <p>画第1到15个主成分的热图</p>
-<p><img src="pic/DimHeatMap15.png" alt="DimHeatMap15"></p>
+<p><img src="/pic/DimHeatMap15.png" alt="DimHeatMap15"></p>
 <p>查看主成分贡献度</p>
 <blockquote>
 <p>ElbowPlot画肘部图</p>
@@ -513,7 +513,7 @@
 <p>从下图可以看出可以选择前10个PC</p>
 <p>在选择此参数时,建议选择偏高的数字（为了获取更多的稀有分群,“宁滥勿缺”）；有些亚群很罕见,如果没有先验知识,很难将这种大小的数据集与背景噪声区分开来。</p>
 </blockquote>
-<p><img src="pic/ElbowPlot.png" alt="ElbowPlot"></p>
+<p><img src="/pic/ElbowPlot.png" alt="ElbowPlot"></p>
 <p>非线性降维：UMAP/tSNE</p>
 <blockquote>
 <p><strong>性降维PCA（1933）</strong>一个特点就是：它将高维中不相似的数据点放在较低维度时，会尽可能多地保留原始数据的差异，因此导致这些不相似的数据相距甚远，大多的数据重叠放置<br><strong>tSNE（2008）兼顾了高维降维+低维</strong>展示，降维后的那些不相似的数据点依然可以放得靠近一些，保证了点既在局部分散，又在全局聚集<br><strong>UMAP（2018）</strong>相比tSNE又能展示更多的维度：<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fsci-hub.tw%2Fhttps%3A%2F%2Fdoi.org%2F10.1038%2Fnbt.4314" target="_blank" rel="external">参考文献</a></p>
@@ -527,10 +527,10 @@
 <p>head(pbmc[[‘tsne’]]@cell.embeddings)[1:2,1:2]<br>                     tSNE_1    tSNE_2<br>   AAACATACAACCAC -10.99287  13.52608<br>   AAACATTGAGCTAC -28.57216 -27.23769<br>DimPlot(pbmc,reduction = “tsne”,label = TRUE,pt.size = 1.5)</p>
    <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; </div><div class="line">&gt;</div></pre></td></tr></table></figure>
 </blockquote>
-<p>   <img src="pic/Rplot_tsne.png" alt="Rplot_tsne"></p>
+<p>   <img src="/pic/Rplot_tsne.png" alt="Rplot_tsne"></p>
 <p>Umap降维并可视化</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">   &gt; pbmc &lt;- RunUMAP(pbmc, dims = <span class="number">1</span>:<span class="number">10</span>)</div><div class="line">&gt; head(pbmc[[<span class="string">'umap'</span>]]@cell.embeddings)[<span class="number">1</span>:<span class="number">2</span>,<span class="number">1</span>:<span class="number">2</span>]</div><div class="line">                    UMAP_1     UMAP_2</div><div class="line">   AAACATACAACCAC <span class="number">3.784667</span>   <span class="number">3.790803</span></div><div class="line">   AAACATTGAGCTAC <span class="number">1.231294</span> -<span class="number">10.622349</span></div><div class="line">   &gt; DimPlot(pbmc,reduction = <span class="string">"umap"</span>,label = <span class="literal">TRUE</span>,pt.size = <span class="number">1.5</span>)</div></pre></td></tr></table></figure>
-<p>   <img src="pic/Rplot_umap.png" alt="Rplot_umap"></p>
+<p>   <img src="/pic/Rplot_umap.png" alt="Rplot_umap"></p>
 <ol>
 <li><p>基于图的集群</p>
 <p>计算权重</p>
@@ -559,7 +559,7 @@
 <p>本例基于tsne降维结果，不同颜色表示不同的群</p>
 </blockquote>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; DimPlot(pbmc,reduction = <span class="string">"tsne"</span>,label = <span class="literal">TRUE</span>,pt.size = <span class="number">1.5</span>)</div></pre></td></tr></table></figure>
-<p><img src="pic/Rplot_cluster_tsne.png" alt="Rplot_cluster_tsne"></p>
+<p><img src="/pic/Rplot_cluster_tsne.png" alt="Rplot_cluster_tsne"></p>
 </li>
 <li><p>识别差异表达基因（cluster biomarker）</p>
 <p>识别cluster1中的marker基因</p>
@@ -587,31 +587,31 @@
 <p>将基因表达量投射到降维聚类结果中 </p>
 </blockquote>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; FeaturePlot(pbmc, features = c(<span class="string">"MS4A1"</span>, <span class="string">"GNLY"</span>, <span class="string">"CD3E"</span>, <span class="string">"CD14"</span>, <span class="string">"FCER1A"</span>, <span class="string">"FCGR3A"</span>, <span class="string">"LYZ"</span>, <span class="string">"PPBP"</span>, <span class="string">"CD8A"</span>),cols = c(<span class="string">"gray"</span>, <span class="string">"red"</span>))</div></pre></td></tr></table></figure>
-<p><img src="pic/FeaturePlot.png" alt="FeaturePlot"></p>
+<p><img src="/pic/FeaturePlot.png" alt="FeaturePlot"></p>
 <p>小提琴图<code>VlnPlot</code></p>
 <blockquote>
 <p>展示某些基因在所有细胞群的表达量</p>
 </blockquote>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; VlnPlot(pbmc, features = c(<span class="string">"MS4A1"</span>, <span class="string">"CD79A"</span>))</div><div class="line">&gt; VlnPlot(pbmc, features = c(<span class="string">"NKG7"</span>, <span class="string">"PF4"</span>), slot = <span class="string">"counts"</span>, log = <span class="literal">TRUE</span>)</div></pre></td></tr></table></figure>
-<p><img src="pic/Rplot_vln.png" alt="Rplot_vln"></p>
-<p><img src="pic/Rplot_vln2.png" alt="Rplot_vln2"></p>
+<p><img src="/pic/Rplot_vln.png" alt="Rplot_vln"></p>
+<p><img src="/pic/Rplot_vln2.png" alt="Rplot_vln2"></p>
 <p>热图<code>DoHeatmap</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">## 每个细胞群选前十个基因，所以一共有100个基因</div><div class="line">&gt; top10 &lt;- pbmc.markers %&gt;% group_by(cluster) %&gt;% top_n(n = 10, wt = avg_logFC)</div><div class="line">&gt; DoHeatmap(pbmc, features = top10$gene) + NoLegend()</div></pre></td></tr></table></figure>
-<p><img src="pic/DoHeatMap.png" alt="DoHeatMap"></p>
+<p><img src="/pic/DoHeatMap.png" alt="DoHeatMap"></p>
 <p>气泡图<code>DotPlot</code></p>
 <blockquote>
 <p>y轴是细胞群</p>
 <p>颜色表示平均表达量</p>
 <p>大小表示表达的基因个数占总个数的百分比</p>
 </blockquote>
-<p><img src="pic/DotPlot.png" alt="DotPlot"></p>
+<p><img src="/pic/DotPlot.png" alt="DotPlot"></p>
 <p>山脊图<code>RidgePlot</code></p>
 <blockquote>
 <p>x轴是表达量，y轴是细胞群</p>
 <p>feature1的(x,y)位置山脊高说明feature1基因在y细胞群，表达量为x的细胞很多</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">RidgePlot(pbmc, features = c(&quot;MS4A1&quot;, &quot;GNLY&quot;, &quot;CD3E&quot;, &quot;CD14&quot;), ncol = 2)</div></pre></td></tr></table></figure>
-<p><img src="pic/Ridge_Plot.png" alt="Ridge_Plot"></p>
+<p><img src="/pic/Ridge_Plot.png" alt="Ridge_Plot"></p>
 </li>
 <li><p>判断细胞类型</p>
 <p>根据每个群找出来的biomarker来判断每个细胞群的细胞类型。</p>

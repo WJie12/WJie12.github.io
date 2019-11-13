@@ -86,19 +86,19 @@
 <meta property="og:site_name" content="WJie2">
 <meta property="og:description" content="读入数据 基于上一篇Seurat的分群的结果进行处理，已经进行过预处理降维分群。 导入上篇保存的pbmc数据 1&amp;gt; load(&apos;./output/res0.5.Robj&apos;) 取其中两个亚群进行分析 123&amp;gt; sub_pbmc &amp;lt;- subset(pbmc, idents=c(3,4))# 目前数据是个seurat对象&amp;gt; seurat_object &amp;lt;- sub_pb">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Monocle/pic/trajectory_state.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Monocle/pic/trajectory_psudotime.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Monocle/pic/trajectory_snn_res.0.5.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Monocle/pic/trajectory_gene.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Monocle/pic/pseudotime_heatmap.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Monocle/pic/Rplot_gene_pseudotime.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Monocle/pic/heatmap_2dir.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/13/Monocle/pic/branched_pseudotime_2dir.png">
-<meta property="og:updated_time" content="2019-11-13T09:41:14.922Z">
+<meta property="og:image" content="http://yoursite.com/pic/trajectory_state.png">
+<meta property="og:image" content="http://yoursite.com/pic/trajectory_psudotime.png">
+<meta property="og:image" content="http://yoursite.com/pic/trajectory_snn_res.0.5.png">
+<meta property="og:image" content="http://yoursite.com/pic/trajectory_gene.png">
+<meta property="og:image" content="http://yoursite.com/pic/pseudotime_heatmap.png">
+<meta property="og:image" content="http://yoursite.com/pic/Rplot_gene_pseudotime.png">
+<meta property="og:image" content="http://yoursite.com/pic/heatmap_2dir.png">
+<meta property="og:image" content="http://yoursite.com/pic/branched_pseudotime_2dir.png">
+<meta property="og:updated_time" content="2019-11-13T09:48:39.119Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Monocle拟时分析">
 <meta name="twitter:description" content="读入数据 基于上一篇Seurat的分群的结果进行处理，已经进行过预处理降维分群。 导入上篇保存的pbmc数据 1&amp;gt; load(&apos;./output/res0.5.Robj&apos;) 取其中两个亚群进行分析 123&amp;gt; sub_pbmc &amp;lt;- subset(pbmc, idents=c(3,4))# 目前数据是个seurat对象&amp;gt; seurat_object &amp;lt;- sub_pb">
-<meta name="twitter:image" content="http://yoursite.com/2019/11/13/Monocle/pic/trajectory_state.png">
+<meta name="twitter:image" content="http://yoursite.com/pic/trajectory_state.png">
 
 
 
@@ -394,30 +394,30 @@
 </li>
 <li><p>画轨迹图</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; plot_cell_trajectory(cds, color_by = <span class="string">"State"</span>)</div></pre></td></tr></table></figure>
-<p><img src="pic/trajectory_state.png" alt="trajectory_state"></p>
+<p><img src="/pic/trajectory_state.png" alt="trajectory_state"></p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; plot_cell_trajectory(cds, color_by = <span class="string">"Pseudotime"</span>)</div></pre></td></tr></table></figure>
-<p><img src="pic/trajectory_psudotime.png" alt="trajectory_psudotime"></p>
+<p><img src="/pic/trajectory_psudotime.png" alt="trajectory_psudotime"></p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; plot_cell_trajectory(cds, color_by = <span class="string">"RNA_snn_res.0.5"</span>)</div></pre></td></tr></table></figure>
-<p><img src="pic/trajectory_snn_res.0.5.png" alt="trajectory_snn_res.0.5"></p>
+<p><img src="/pic/trajectory_snn_res.0.5.png" alt="trajectory_snn_res.0.5"></p>
 <p>特定基因在在轨迹上的表达量图</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; plot_cell_trajectory(cds, markers=<span class="string">"CD79A"</span>, cell_size=<span class="number">0.5</span>, use_color_gradient=<span class="literal">T</span>) + scale_color_gradient2(low=<span class="string">"gray"</span>,mid=<span class="string">"yellow"</span>,high=<span class="string">"red"</span>)</div></pre></td></tr></table></figure>
-<p><img src="pic/trajectory_gene.png" alt="trajectory_gene"></p>
+<p><img src="/pic/trajectory_gene.png" alt="trajectory_gene"></p>
 </li>
 <li><p>展示感兴趣的基因热图（一个方向变化）</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt; my_pseudotime_de &lt;- differentialGeneTest(cds,fullModelFormulaStr = <span class="string">"~sm.ns(Pseudotime)"</span>,cores = <span class="number">5</span>)</div><div class="line"></div><div class="line">&gt; sig_gene_names &lt;- row.names(subset(my_pseudotime_de, qval &lt; <span class="number">10</span>^-<span class="number">20</span>))</div><div class="line"></div><div class="line">&gt; plot_pseudotime_heatmap(cds[sig_gene_names,], num_clusters = <span class="number">4</span>,cores = <span class="number">5</span>,use_gene_short_name = <span class="literal">TRUE</span>,show_rownames = <span class="literal">TRUE</span>)</div></pre></td></tr></table></figure>
-<p><img src="pic/pseudotime_heatmap.png" alt="pseudotime_heatmap"></p>
+<p><img src="/pic/pseudotime_heatmap.png" alt="pseudotime_heatmap"></p>
 </li>
 <li><p>展示感兴趣基因基因拟时间表达变化（一个方向</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&gt; c&lt;-subset(my_pseudotime_de, qval &lt; <span class="number">10</span>^-<span class="number">20</span>)</div><div class="line"></div><div class="line">&gt; to_be_tested &lt;- row.names(subset(fData(cds),gene_short_name %<span class="keyword">in</span>% c(<span class="string">"CD79A"</span>, <span class="string">"NKG7"</span>, <span class="string">"HLA-DRA"</span>, <span class="string">"CCL5"</span>)))</div><div class="line">&gt; cds_subset &lt;- cds[to_be_tested,]</div><div class="line"></div><div class="line">&gt; diff_test_res &lt;- differentialGeneTest(cds_subset,fullModelFormulaStr = <span class="string">"~sm.ns(Pseudotime)"</span>)</div><div class="line"></div><div class="line">&gt; diff_test_res[,c(<span class="string">"gene_short_name"</span>, <span class="string">"pval"</span>, <span class="string">"qval"</span>)]</div><div class="line"></div><div class="line">&gt; plot_genes_in_pseudotime(cds_subset,color_by=<span class="string">"RNA_snn_res.0.5"</span>)</div></pre></td></tr></table></figure>
-<p><img src="pic/Rplot_gene_pseudotime.png" alt="Rplot_gene_pseudotime"></p>
+<p><img src="/pic/Rplot_gene_pseudotime.png" alt="Rplot_gene_pseudotime"></p>
 </li>
 <li><p>两个方向的图</p>
 <p>热图</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; plot_genes_branched_heatmap(cds[sig_gene_names,], num_clusters = <span class="number">4</span>,cores = <span class="number">5</span>,use_gene_short_name = <span class="literal">TRUE</span>,show_rownames = <span class="literal">TRUE</span>)</div></pre></td></tr></table></figure>
-<p><img src="pic/heatmap_2dir.png" alt="heatmap_2dir"></p>
+<p><img src="/pic/heatmap_2dir.png" alt="heatmap_2dir"></p>
 <p>拟时间表达</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; plot_genes_branched_pseudotime(cds_subset, branch_point = <span class="number">2</span>,color_by=<span class="string">"RNA_snn_res.0.5"</span>)</div></pre></td></tr></table></figure>
-<p><img src="pic/branched_pseudotime_2dir.png" alt="branched_pseudotime_2dir"></p>
+<p><img src="/pic/branched_pseudotime_2dir.png" alt="branched_pseudotime_2dir"></p>
 </li>
 </ol>
 
