@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://yoursite.com/pic/DoHeatMap.png">
 <meta property="og:image" content="http://yoursite.com/pic/DotPlot.png">
 <meta property="og:image" content="http://yoursite.com/pic/Ridge_Plot.png">
-<meta property="og:updated_time" content="2019-11-13T10:03:02.122Z">
+<meta property="og:updated_time" content="2019-11-13T10:05:32.204Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Seurat单细胞分群">
 <meta name="twitter:description" content="前言  数据：10X官方提供的PBMC数据集，2700个外周血单核细胞（PBMC，Peripheral Blood Mononuclear Cells）公共数据，使用Illumina NextSeq 500测序。  原始教程和代码：Seurat - Guided Clustering Tutorial  1234hg19|__barcodes.tsv|__genes.tsv|__matrix.m">
@@ -515,8 +515,8 @@
 <blockquote>
 <p><strong>性降维PCA（1933）</strong>一个特点就是：它将高维中不相似的数据点放在较低维度时，会尽可能多地保留原始数据的差异，因此导致这些不相似的数据相距甚远，大多的数据重叠放置<br><strong>tSNE（2008）兼顾了高维降维+低维</strong>展示，降维后的那些不相似的数据点依然可以放得靠近一些，保证了点既在局部分散，又在全局聚集<br><strong>UMAP（2018）</strong>相比tSNE又能展示更多的维度：<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fsci-hub.tw%2Fhttps%3A%2F%2Fdoi.org%2F10.1038%2Fnbt.4314" target="_blank" rel="external">参考文献</a></p>
 <p>Seurat里要用tSNE要先计算PCA。Seurat下游的分群只需要PCA降维结果就可以，但是用tSNE的话，二维显示的图比较好看。</p>
-<p>  Tsne降维并可视化</p>
 </blockquote>
+<p> Tsne降维并可视化</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt; pbmc &lt;- RunTSNE(pbmc, dims = <span class="number">1</span>:<span class="number">10</span>)</div><div class="line">&gt; head(pbmc[[<span class="string">'tsne'</span>]]@cell.embeddings)[<span class="number">1</span>:<span class="number">2</span>,<span class="number">1</span>:<span class="number">2</span>]</div><div class="line">                  tSNE_1    tSNE_2</div><div class="line">AAACATACAACCAC -<span class="number">10.99287</span>  <span class="number">13.52608</span></div><div class="line">AAACATTGAGCTAC -<span class="number">28.57216</span> -<span class="number">27.23769</span></div><div class="line">DimPlot(pbmc,reduction = <span class="string">"tsne"</span>,label = <span class="literal">TRUE</span>,pt.size = <span class="number">1.5</span>)</div></pre></td></tr></table></figure>
 <pre><code>![Rplot_tsne](/pic/Rplot_tsne.png)
 </code></pre><p>  Umap降维并可视化</p>
