@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="读入数据 基于上一篇Seurat的分群的结果进行处理，已经进行过预处理降维分群。 导入上篇保存的pbmc数据 1&amp;gt; load(&apos;./output/res0.5.Robj&apos;) 取其中两个亚群进行分析 123&amp;gt; sub_pbmc &amp;lt;- subset(pbmc, idents=c(3,4))# 目前数据是个seurat对象&amp;gt; seurat_object &amp;lt;- sub_pb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WJie2">
+<meta property="og:url" content="http://yoursite.com/2019/11/13/Monocle/index.html">
+<meta property="og:site_name" content="WJie2">
+<meta property="og:description" content="读入数据 基于上一篇Seurat的分群的结果进行处理，已经进行过预处理降维分群。 导入上篇保存的pbmc数据 1&amp;gt; load(&apos;./output/res0.5.Robj&apos;) 取其中两个亚群进行分析 123&amp;gt; sub_pbmc &amp;lt;- subset(pbmc, idents=c(3,4))# 目前数据是个seurat对象&amp;gt; seurat_object &amp;lt;- sub_pb">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/11/13/Monocle/pic/trajectory_state.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/13/Monocle/pic/trajectory_psudotime.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/13/Monocle/pic/trajectory_snn_res.0.5.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/13/Monocle/pic/trajectory_gene.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/13/Monocle/pic/pseudotime_heatmap.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/13/Monocle/pic/Rplot_gene_pseudotime.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/13/Monocle/pic/heatmap_2dir.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/13/Monocle/pic/branched_pseudotime_2dir.png">
+<meta property="og:updated_time" content="2019-11-13T09:26:02.040Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WJie2">
+<meta name="twitter:description" content="读入数据 基于上一篇Seurat的分群的结果进行处理，已经进行过预处理降维分群。 导入上篇保存的pbmc数据 1&amp;gt; load(&apos;./output/res0.5.Robj&apos;) 取其中两个亚群进行分析 123&amp;gt; sub_pbmc &amp;lt;- subset(pbmc, idents=c(3,4))# 目前数据是个seurat对象&amp;gt; seurat_object &amp;lt;- sub_pb">
+<meta name="twitter:image" content="http://yoursite.com/2019/11/13/Monocle/pic/trajectory_state.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/11/13/Monocle/"/>
+
+
+
+
+
+  <title> | WJie2</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WJie2</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/13/Monocle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jie Wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WJie2">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-13T17:30:59+08:00">
+                2019-11-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ol>
+<li><p>读入数据</p>
+<p>基于上一篇Seurat的分群的结果进行处理，已经进行过预处理降维分群。</p>
+<p>导入上篇保存的pbmc数据</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; load(<span class="string">'./output/res0.5.Robj'</span>)</div></pre></td></tr></table></figure>
+<p>取其中两个亚群进行分析</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt; sub_pbmc &lt;- subset(pbmc, idents=c(<span class="number">3</span>,<span class="number">4</span>))</div><div class="line"><span class="comment"># 目前数据是个seurat对象</span></div><div class="line">&gt; seurat_object &lt;- sub_pbmc</div></pre></td></tr></table></figure>
+<p>每个群取10个marker基因，为下面monocle分析准备</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; markers &lt;- FindAllMarkers(sub_pbmc, only.pos = <span class="literal">TRUE</span>, min.pct = <span class="number">0.25</span>, logfc.threshold = <span class="number">0.25</span>)</div><div class="line">&gt; top10 &lt;- markers %&gt;% group_by(cluster) %&gt;% top_n(n = <span class="number">10</span>, wt = avg_logFC)</div></pre></td></tr></table></figure>
+<p>接下来从seurat object中提取创建monocle对象需要的数据</p>
+<p>提取表达矩阵，转化为<code>matrix</code>类型</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; data &lt;- as(as.matrix(seurat_object@assays$RNA@data), <span class="string">'sparseMatrix'</span>)</div></pre></td></tr></table></figure>
+<p>提取细胞表，并转化成<code>AnnotatedDataFrame</code>类型</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; pd &lt;- new(<span class="string">'AnnotatedDataFrame'</span>, data = seurat_object@meta.data)</div></pre></td></tr></table></figure>
+<p>提取基因注释，并转化成<code>AnnotatedDataFrame</code>类型</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; fData &lt;- data.frame(gene_short_name = row.names(data), row.names = row.names(data))</div><div class="line">&gt; fd &lt;- new(<span class="string">'AnnotatedDataFrame'</span>, data = fData)</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建monocle对象</p>
+<p><code>newCellDataSet</code>需要输入一个表达矩阵，<code>AnnotatedDataFrame</code>格式的行坐标（sample name）和纵坐标（gene name)</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#Construct monocle cds</span></div><div class="line">&gt; cds &lt;- newCellDataSet(data,</div><div class="line">                         phenoData = pd,</div><div class="line">                         featureData = fd,</div><div class="line">                         lowerDetectionLimit = <span class="number">0.5</span>,</div><div class="line">                         expressionFamily = negbinomial.size());</div></pre></td></tr></table></figure>
+</li>
+<li><p>预估size factors和分散</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; cds &lt;- estimateSizeFactors(cds)</div><div class="line">&gt; cds &lt;- estimateDispersions(cds)</div></pre></td></tr></table></figure>
+</li>
+<li><p>提取表达基因</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">expressed_genes &lt;- row.names(subset(fData(cds)))</div></pre></td></tr></table></figure>
+</li>
+<li><p>建立轨迹</p>
+<p>采用之前每个群选取的10个marker（top10）来建立轨迹</p>
+<p>将top10读取成矩阵</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; ordering_genes&lt;-as.matrix(top10)</div><div class="line">ime.txt<span class="string">")</span></div></pre></td></tr></table></figure>
+<p>过滤</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; cds &lt;- setOrderingFilter(cds, ordering_genes = ordering_genes)</div></pre></td></tr></table></figure>
+<p>降维</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; cds &lt;- reduceDimension(cds, max_components = <span class="number">2</span>, method = <span class="string">'DDRTree'</span>,auto_param_selection = <span class="literal">F</span>) <span class="comment"># take long time</span></div></pre></td></tr></table></figure>
+<p>排序</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; cds &lt;- orderCells(cds)</div></pre></td></tr></table></figure>
+<p>保存</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; save(cds,file=<span class="string">"./output/orderCells.Robj"</span>)</div><div class="line">write.table(pData(cds),file=<span class="string">"./output/my_pseudotime.txt"</span>)</div></pre></td></tr></table></figure>
+<p>查看</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&gt; head(pData(cds))</div><div class="line">               orig.ident nCount_RNA nFeature_RNA percent.mt RNA_snn_res.0.5 seurat_clusters     S.Score    G2M.Score</div><div class="line">AAACATACAACCAC     pbmc3k       <span class="number">2419</span>          <span class="number">779</span>   <span class="number">3.017776</span>               <span class="number">4</span>               <span class="number">4</span>  <span class="number">0.06500339</span> -<span class="number">0.065012414</span></div><div class="line">AAACATTGAGCTAC     pbmc3k       <span class="number">4903</span>         <span class="number">1352</span>   <span class="number">3.793596</span>               <span class="number">3</span>               <span class="number">3</span> -<span class="number">0.01906540</span> -<span class="number">0.132349057</span></div><div class="line">AAACCGTGTATGCG     pbmc3k        <span class="number">980</span>          <span class="number">521</span>   <span class="number">1.224490</span>               <span class="number">4</span>               <span class="number">4</span> -<span class="number">0.01086219</span>  <span class="number">0.005361576</span></div><div class="line">AAACGCTGACCAGT     pbmc3k       <span class="number">2175</span>          <span class="number">782</span>   <span class="number">3.816092</span>               <span class="number">4</span>               <span class="number">4</span> -<span class="number">0.03122878</span> -<span class="number">0.053972321</span></div><div class="line">AAACGCTGGTTCTT     pbmc3k       <span class="number">2260</span>          <span class="number">790</span>   <span class="number">3.097345</span>               <span class="number">4</span>               <span class="number">4</span> -<span class="number">0.03190767</span> -<span class="number">0.011423063</span></div><div class="line">AAACTTGAAAAACG     pbmc3k       <span class="number">3914</span>         <span class="number">1112</span>   <span class="number">2.631579</span>               <span class="number">3</span>               <span class="number">3</span>  <span class="number">0.04395791</span> -<span class="number">0.080502879</span></div><div class="line">               Phase Size_Factor Pseudotime State</div><div class="line">AAACATACAACCAC     S   <span class="number">1.3046257</span>   <span class="number">4.343051</span>     <span class="number">6</span></div><div class="line">AAACATTGAGCTAC    G1   <span class="number">2.6443075</span>   <span class="number">6.530045</span>     <span class="number">8</span></div><div class="line">AAACCGTGTATGCG   G2M   <span class="number">0.5285379</span>   <span class="number">0.000000</span>     <span class="number">1</span></div><div class="line">AAACGCTGACCAGT    G1   <span class="number">1.1730306</span>   <span class="number">3.882721</span>     <span class="number">5</span></div><div class="line">AAACGCTGGTTCTT    G1   <span class="number">1.2188731</span>   <span class="number">1.263559</span>     <span class="number">1</span></div><div class="line">AAACTTGAAAAACG     S   <span class="number">2.1109157</span>   <span class="number">6.543204</span>     <span class="number">8</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>画轨迹图</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; plot_cell_trajectory(cds, color_by = <span class="string">"State"</span>)</div></pre></td></tr></table></figure>
+<p><img src="pic/trajectory_state.png" alt="trajectory_state"></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; plot_cell_trajectory(cds, color_by = <span class="string">"Pseudotime"</span>)</div></pre></td></tr></table></figure>
+<p><img src="pic/trajectory_psudotime.png" alt="trajectory_psudotime"></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; plot_cell_trajectory(cds, color_by = <span class="string">"RNA_snn_res.0.5"</span>)</div></pre></td></tr></table></figure>
+<p><img src="pic/trajectory_snn_res.0.5.png" alt="trajectory_snn_res.0.5"></p>
+<p>特定基因在在轨迹上的表达量图</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; plot_cell_trajectory(cds, markers=<span class="string">"CD79A"</span>, cell_size=<span class="number">0.5</span>, use_color_gradient=<span class="literal">T</span>) + scale_color_gradient2(low=<span class="string">"gray"</span>,mid=<span class="string">"yellow"</span>,high=<span class="string">"red"</span>)</div></pre></td></tr></table></figure>
+<p><img src="pic/trajectory_gene.png" alt="trajectory_gene"></p>
+</li>
+<li><p>展示感兴趣的基因热图（一个方向变化）</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt; my_pseudotime_de &lt;- differentialGeneTest(cds,fullModelFormulaStr = <span class="string">"~sm.ns(Pseudotime)"</span>,cores = <span class="number">5</span>)</div><div class="line"></div><div class="line">&gt; sig_gene_names &lt;- row.names(subset(my_pseudotime_de, qval &lt; <span class="number">10</span>^-<span class="number">20</span>))</div><div class="line"></div><div class="line">&gt; plot_pseudotime_heatmap(cds[sig_gene_names,], num_clusters = <span class="number">4</span>,cores = <span class="number">5</span>,use_gene_short_name = <span class="literal">TRUE</span>,show_rownames = <span class="literal">TRUE</span>)</div></pre></td></tr></table></figure>
+<p><img src="pic/pseudotime_heatmap.png" alt="pseudotime_heatmap"></p>
+</li>
+<li><p>展示感兴趣基因基因拟时间表达变化（一个方向</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&gt; c&lt;-subset(my_pseudotime_de, qval &lt; <span class="number">10</span>^-<span class="number">20</span>)</div><div class="line"></div><div class="line">&gt; to_be_tested &lt;- row.names(subset(fData(cds),gene_short_name %<span class="keyword">in</span>% c(<span class="string">"CD79A"</span>, <span class="string">"NKG7"</span>, <span class="string">"HLA-DRA"</span>, <span class="string">"CCL5"</span>)))</div><div class="line">&gt; cds_subset &lt;- cds[to_be_tested,]</div><div class="line"></div><div class="line">&gt; diff_test_res &lt;- differentialGeneTest(cds_subset,fullModelFormulaStr = <span class="string">"~sm.ns(Pseudotime)"</span>)</div><div class="line"></div><div class="line">&gt; diff_test_res[,c(<span class="string">"gene_short_name"</span>, <span class="string">"pval"</span>, <span class="string">"qval"</span>)]</div><div class="line"></div><div class="line">&gt; plot_genes_in_pseudotime(cds_subset,color_by=<span class="string">"RNA_snn_res.0.5"</span>)</div></pre></td></tr></table></figure>
+<p><img src="pic/Rplot_gene_pseudotime.png" alt="Rplot_gene_pseudotime"></p>
+</li>
+<li><p>两个方向的图</p>
+<p>热图</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; plot_genes_branched_heatmap(cds[sig_gene_names,], num_clusters = <span class="number">4</span>,cores = <span class="number">5</span>,use_gene_short_name = <span class="literal">TRUE</span>,show_rownames = <span class="literal">TRUE</span>)</div></pre></td></tr></table></figure>
+<p><img src="pic/heatmap_2dir.png" alt="heatmap_2dir"></p>
+<p>拟时间表达</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt; plot_genes_branched_pseudotime(cds_subset, branch_point = <span class="number">2</span>,color_by=<span class="string">"RNA_snn_res.0.5"</span>)</div></pre></td></tr></table></figure>
+<p><img src="pic/branched_pseudotime_2dir.png" alt="branched_pseudotime_2dir"></p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/13/Seurat/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Jie Wang</p>
+              <p class="site-description motion-element" itemprop="description">太阳强烈 水波温柔</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/WJie12" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:summerwangjie@outlook.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WJie12</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
