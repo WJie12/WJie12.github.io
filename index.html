@@ -343,7 +343,7 @@
         
           
             <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>This pipeline is developed for annotating and profiling small RNAs with UMI attached to both ends. The raw data are reads in FASTQ format. After preprocessing and mapping to reference libraries, we can statistic the reads. Particularly, the reads which can be aligned to the genome but cannot be aligned to RNA sequences databases will be filtered out and written to a CSV format file. The following figure presents a general workflow of the pipeline. </p>
-<p><img src="smallRNAseq\samllrnq.jpg" alt="figure1"></p>
+<img src="/2019/12/08/smallRNAseq/samllrnq.jpg" alt="workflow" title="workflow">
 <h1 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h1><h2 id="Preprocessing"><a href="#Preprocessing" class="headerlink" title="Preprocessing"></a>Preprocessing</h2><p>The preprocessing phase includes three parts: adapter extraction, quality control, UMI extraction. At first, adapters in 3’ end and 5’ end are removed by Cutadapt and then only reads whose length within 27~55nt are retained. Finally, UMIs in both 3’ end and 5’ end are extracted from sequence reads and add to read names with UMI-tools. At the UMI extraction step, reads with poor quality are dropped at the same time by UMI-tools.</p>
 <p>Software and parameters used in this phase:</p>
 <table>
@@ -499,13 +499,13 @@
 <p>Full analysis results of samples can be found in the attachment.</p>
 <h1 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h1><p>The following pie graphs show the mapping results of different samples.</p>
 <p>Sample 1:</p>
-<p><img src="smallRNAseq\s1_y_rnadb_y_genome_result.png" alt="s1_y_rnadb_y_genome_result"></p>
+<img src="/2019/12/08/smallRNAseq/s1_y_rnadb_y_genome_result.png" alt="s1_y_rnadb_y_genome_result" title="s1_y_rnadb_y_genome_result">
 <p>Sample 3:</p>
-<p><img src="smallRNAseq\s3_y_rnadb_y_genome_result.png" alt="s3_y_rnadb_y_genome_result"></p>
+<img src="/2019/12/08/smallRNAseq/s3_y_rnadb_y_genome_result.png" alt="s3_y_rnadb_y_genome_result" title="s3_y_rnadb_y_genome_result">
 <p>Sample 5:</p>
-<p><img src="smallRNAseq\s5_y_rnadb_y_genome_result.png" alt="s5_y_rnadb_y_genome_result"></p>
+<img src="/2019/12/08/smallRNAseq/s5_y_rnadb_y_genome_result.png" alt="s5_y_rnadb_y_genome_result" title="s5_y_rnadb_y_genome_result">
 <p>The head of the n_rnadb_y_genome.csv for sample 1:</p>
-<p><img src="smallRNAseq\1575810609531.png" alt="1575810609531"></p>
+<p><img src="/2019/12/08/smallRNAseq/1575810609531.png" alt="1575810609531" title="1575810609531">)</p>
 
           
         
