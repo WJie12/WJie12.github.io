@@ -79,17 +79,23 @@
 
 
 
-<meta name="description" content="HELLO WORLD! —WJ">
+<meta name="description" content="IntroductionThis pipeline is developed for annotating and profiling small RNAs with UMI attached to both ends. The raw data are reads in FASTQ format. After preprocessing and mapping to reference libr">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HELLO WORLD">
-<meta property="og:url" content="http://yoursite.com/2017/10/28/HELLO-WORLD-0/index.html">
+<meta property="og:title" content="Notes for small RNA sequencing analysis">
+<meta property="og:url" content="http://yoursite.com/2019/12/08/smallRNAseq/index.html">
 <meta property="og:site_name" content="WJie2">
-<meta property="og:description" content="HELLO WORLD! —WJ">
+<meta property="og:description" content="IntroductionThis pipeline is developed for annotating and profiling small RNAs with UMI attached to both ends. The raw data are reads in FASTQ format. After preprocessing and mapping to reference libr">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-28T09:41:15.686Z">
+<meta property="og:image" content="http://yoursite.com/2019/12/08/smallRNAseq/smallRNAseq/samllrnq.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/12/08/smallRNAseq/smallRNAseq/s1_y_rnadb_y_genome_result.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/08/smallRNAseq/smallRNAseq/s3_y_rnadb_y_genome_result.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/08/smallRNAseq/smallRNAseq/s5_y_rnadb_y_genome_result.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/08/smallRNAseq/smallRNAseq/1575810609531.png">
+<meta property="og:updated_time" content="2019-12-08T14:22:48.999Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HELLO WORLD">
-<meta name="twitter:description" content="HELLO WORLD! —WJ">
+<meta name="twitter:title" content="Notes for small RNA sequencing analysis">
+<meta name="twitter:description" content="IntroductionThis pipeline is developed for annotating and profiling small RNAs with UMI attached to both ends. The raw data are reads in FASTQ format. After preprocessing and mapping to reference libr">
+<meta name="twitter:image" content="http://yoursite.com/2019/12/08/smallRNAseq/smallRNAseq/samllrnq.jpg">
 
 
 
@@ -119,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/10/28/HELLO-WORLD-0/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/12/08/smallRNAseq/"/>
 
 
 
 
 
-  <title>HELLO WORLD | WJie2</title>
+  <title>Notes for small RNA sequencing analysis | WJie2</title>
   
 
 
@@ -252,7 +258,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/28/HELLO-WORLD-0/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/08/smallRNAseq/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Jie Wang">
@@ -269,7 +275,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">HELLO WORLD</h1>
+          <h1 class="post-title" itemprop="name headline">Notes for small RNA sequencing analysis</h1>
         
 
         <div class="post-meta">
@@ -281,8 +287,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-28T02:17:21+08:00">
-                2017-10-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-08T22:20:42+08:00">
+                2019-12-08
               </time>
             
 
@@ -304,8 +310,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Other/" itemprop="url" rel="index">
-                    <span itemprop="name">Other</span>
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index">
+                    <span itemprop="name">Bioinformatics</span>
                   </a>
                 </span>
 
@@ -341,7 +347,170 @@
       
 
       
-        <p>HELLO WORLD! —WJ</p>
+        <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>This pipeline is developed for annotating and profiling small RNAs with UMI attached to both ends. The raw data are reads in FASTQ format. After preprocessing and mapping to reference libraries, we can statistic the reads. Particularly, the reads which can be aligned to the genome but cannot be aligned to RNA sequences databases will be filtered out and written to a CSV format file. The following figure presents a general workflow of the pipeline. </p>
+<p><img src="smallRNAseq\samllrnq.jpg" alt="figure1"></p>
+<h1 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h1><h2 id="Preprocessing"><a href="#Preprocessing" class="headerlink" title="Preprocessing"></a>Preprocessing</h2><p>The preprocessing phase includes three parts: adapter extraction, quality control, UMI extraction. At first, adapters in 3’ end and 5’ end are removed by Cutadapt and then only reads whose length within 27~55nt are retained. Finally, UMIs in both 3’ end and 5’ end are extracted from sequence reads and add to read names with UMI-tools. At the UMI extraction step, reads with poor quality are dropped at the same time by UMI-tools.</p>
+<p>Software and parameters used in this phase:</p>
+<table>
+<thead>
+<tr>
+<th>Software</th>
+<th>Parameter</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cutadapt</td>
+<td>-j 40</td>
+<td>use 40 CPU cores</td>
+</tr>
+<tr>
+<td></td>
+<td>-a AGATCGGAAGAGCACACGTC</td>
+<td>remove 3’ end adapter: AGATCGGAAGAGCACACGTC</td>
+</tr>
+<tr>
+<td></td>
+<td>-g GTTCAGAGTTCTACAGTCCGACGATC</td>
+<td>remove 5’ end adapter: GTTCAGAGTTCTACAGTCCGACGATC</td>
+</tr>
+<tr>
+<td></td>
+<td>–overlap=3</td>
+<td>require at least three bases match between adapter and read</td>
+</tr>
+<tr>
+<td></td>
+<td>–error-rate=0.1</td>
+<td>the level of error tolerance (mismatch) in adapter sequences searching</td>
+</tr>
+<tr>
+<td></td>
+<td>–times=1</td>
+<td>trim no more than one adapter from each reads</td>
+</tr>
+<tr>
+<td></td>
+<td>–minimum-length=27 –maximum-length=55</td>
+<td>drop reads shorter than 27nt or longer than 55 nt</td>
+</tr>
+<tr>
+<td>UMI-tools extract</td>
+<td>–bc-pattern=NNNNNNNNN             –3prime</td>
+<td>extract 9nt as UMI from 3’ end</td>
+</tr>
+<tr>
+<td></td>
+<td>–bc-pattern=NNNNNN</td>
+<td>extract 6nt as UMI from 5’ end</td>
+</tr>
+<tr>
+<td></td>
+<td>–quality-filter-threshold 20</td>
+<td>filter low quality reads</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Mapping"><a href="#Mapping" class="headerlink" title="Mapping"></a>Mapping</h2><p>The preprocessed reads are still in FASTQ format. The reads are aligned to genome and RNA databases with Bowtie, respectively. The following table lists the reference libraries we use in alignment. After aligning to references, the duplicate reads (reads with the same alignment position and UMI) will be dropped by umi_tools. After mapping, we can get the annotated reads in SAM format.</p>
+<table>
+<thead>
+<tr>
+<th>Genome</th>
+<th>RNA databases(sort by mapping order)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hg19</td>
+<td>mature tRNA</td>
+</tr>
+<tr>
+<td></td>
+<td>tRNA</td>
+</tr>
+<tr>
+<td></td>
+<td>rRNA</td>
+</tr>
+<tr>
+<td></td>
+<td>miRNA</td>
+</tr>
+<tr>
+<td></td>
+<td>piRNA</td>
+</tr>
+<tr>
+<td></td>
+<td>Rfam</td>
+</tr>
+</tbody>
+</table>
+<p>Software and parameters used in this phase:</p>
+<table>
+<thead>
+<tr>
+<th>Software</th>
+<th>Parameter</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bowtie</td>
+<td>-q</td>
+<td>input format: FASTQ</td>
+</tr>
+<tr>
+<td></td>
+<td>–threads 40</td>
+<td>run in 40 threads</td>
+</tr>
+<tr>
+<td></td>
+<td>-v 1</td>
+<td>allow 1 mismatch</td>
+</tr>
+<tr>
+<td></td>
+<td>-m 1</td>
+<td>each reads can only be aligned once</td>
+</tr>
+<tr>
+<td></td>
+<td>-a</td>
+<td>keep all mapping results</td>
+</tr>
+<tr>
+<td></td>
+<td>-un</td>
+<td>write all reads that could not be aligned to a file</td>
+</tr>
+<tr>
+<td>UMI-tools dedup</td>
+<td>–method=unique</td>
+<td>do not consider the sequencing mistakes in UMIs</td>
+</tr>
+<tr>
+<td></td>
+<td>–read-length</td>
+<td>duplicate reads must have the same length</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h2><p>With the SAM format files in the mapping phase, we can count the reads. The reads with the same annotation will be counted as the same RNA. Pie graphs to visualize the percentage of different types of RNAs are plotted based on the counts. Besides counting the reads that mapping to the RNA databases, we can also filter the sequences that can be aligned to the genome but not to RNA databases. The statistics results are saved in y_rnadb_y_genome.csv and n_rnadb_y_genome.csv. The statistic and visualization are conducted with Python scripts. </p>
+<h1 id="Implement"><a href="#Implement" class="headerlink" title="Implement"></a>Implement</h1><p>The preprocessing phase and mapping phase are implemented by Shell scripts, and the analysis phase is implemented by Python scripts. The source code and more details of these scripts can be found in <a href="https://github.com/WJie12/SmallRNASeq" target="_blank" rel="external">SmallRNASeq</a>. </p>
+<p>Full analysis results of samples can be found in the attachment.</p>
+<h1 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h1><p>The following pie graphs show the mapping results of different samples.</p>
+<p>Sample 1:</p>
+<p><img src="smallRNAseq\s1_y_rnadb_y_genome_result.png" alt="s1_y_rnadb_y_genome_result"></p>
+<p>Sample 3:</p>
+<p><img src="smallRNAseq\s3_y_rnadb_y_genome_result.png" alt="s3_y_rnadb_y_genome_result"></p>
+<p>Sample 5:</p>
+<p><img src="smallRNAseq\s5_y_rnadb_y_genome_result.png" alt="s5_y_rnadb_y_genome_result"></p>
+<p>The head of the n_rnadb_y_genome.csv for sample 1:</p>
+<p><img src="smallRNAseq\1575810609531.png" alt="1575810609531"></p>
 
       
     </div>
@@ -366,15 +535,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/11/13/Monocle/" rel="next" title="Monocle拟时分析">
+                <i class="fa fa-chevron-left"></i> Monocle拟时分析
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/10/28/车牌识别-TensorFlow-(0-环境配置)/" rel="prev" title="车牌识别-TensorFlow (0-环境配置)">
-                车牌识别-TensorFlow (0-环境配置) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -426,8 +595,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -494,6 +672,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Methods"><span class="nav-number">2.</span> <span class="nav-text">Methods</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Preprocessing"><span class="nav-number">2.1.</span> <span class="nav-text">Preprocessing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mapping"><span class="nav-number">2.2.</span> <span class="nav-text">Mapping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analysis"><span class="nav-number">2.3.</span> <span class="nav-text">Analysis</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Implement"><span class="nav-number">3.</span> <span class="nav-text">Implement</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Results"><span class="nav-number">4.</span> <span class="nav-text">Results</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
