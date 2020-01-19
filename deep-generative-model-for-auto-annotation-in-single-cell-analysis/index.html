@@ -79,13 +79,26 @@
 
 
 
+<meta name="description" content="Dimension ReductionWith the raw data of single-cell RNA sequencing, the next step is reducing the dimension to get the latent variances. There are four kinds of information have to be included: cell t">
 <meta property="og:type" content="website">
-<meta property="og:title" content="WJie12">
-<meta property="og:url" content="http://yoursite.com/archives/2019/index.html">
+<meta property="og:title" content="deep_generative_model_for_auto-annotation_in_single-cell_analysis">
+<meta property="og:url" content="http://yoursite.com/deep-generative-model-for-auto-annotation-in-single-cell-analysis/index.html">
 <meta property="og:site_name" content="WJie12">
+<meta property="og:description" content="Dimension ReductionWith the raw data of single-cell RNA sequencing, the next step is reducing the dimension to get the latent variances. There are four kinds of information have to be included: cell t">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/1576508656237.png">
+<meta property="og:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/1576509905452.png">
+<meta property="og:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/1576509933899.png">
+<meta property="og:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/1576508886166.png">
+<meta property="og:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/1576508897859.png">
+<meta property="og:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/1576508908811.png">
+<meta property="og:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/1576508919679.png">
+<meta property="og:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/1576508938012.png">
+<meta property="og:updated_time" content="2019-12-19T06:30:15.096Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WJie12">
+<meta name="twitter:title" content="deep_generative_model_for_auto-annotation_in_single-cell_analysis">
+<meta name="twitter:description" content="Dimension ReductionWith the raw data of single-cell RNA sequencing, the next step is reducing the dimension to get the latent variances. There are four kinds of information have to be included: cell t">
+<meta name="twitter:image" content="c:/Users/admin/AppData/Roaming/Typora/typora-user-images/1576508656237.png">
 
 
 
@@ -115,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2019/"/>
+  <link rel="canonical" href="http://yoursite.com/deep-generative-model-for-auto-annotation-in-single-cell-analysis/"/>
 
 
 
 
 
-  <title>归档 | WJie12</title>
+  <title>deep_generative_model_for_auto-annotation_in_single-cell_analysis | WJie12</title>
   
 
 
@@ -140,7 +153,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -234,148 +247,50 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
 
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 6 篇日志。 继续努力。
-      </span>
+	<h1 class="post-title" itemprop="name headline">deep_generative_model_for_auto-annotation_in_single-cell_analysis</h1>
+
+
+
+</header>
 
       
-
+      
+      
+      <div class="post-body">
         
         
+          <h1 id="Dimension-Reduction"><a href="#Dimension-Reduction" class="headerlink" title="Dimension Reduction"></a>Dimension Reduction</h1><p>With the raw data of single-cell RNA sequencing, the next step is reducing the dimension to get the latent variances. There are four kinds of information have to be included: cell type information, batch information, library information and the gene expression information. </p>
+<p>In this project, we will adopt the generative model proposed in scvi to get the latent variances.  The model has included the batch information, library information and gene expression information. By including the cell type information, we define the generating process as follow:</p>
+<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\1576508656237.png" alt="1576508656237"></p>
+<p>As commonly defined in autoencoders, z follows the standard multivariate normal prior  so that it can be reparameterized  into any arbitrary multivariate Gaussian random variable, which can simplify the calculation. </p>
+<p>B denotes the number of batched and <img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\1576509905452.png" alt="1576509905452"></p>
+<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\1576509933899.png" alt="1576509933899"></p>
+<p>are the  μσ , are set to be the empirical mean and variance of the log-library size per batch. </p>
+<p>The parameter R θ∈ + G denotes a gene-specific inverse dispersion, estimated via variational Bayesian inference. </p>
+<p>The mainly different is we will also encode the cell type information into the generative model.</p>
+<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\1576508886166.png" alt="1576508886166"></p>
+<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\1576508897859.png" alt="1576508897859"></p>
+<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\1576508908811.png" alt="1576508908811"></p>
+<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\1576508919679.png" alt="1576508919679"></p>
+<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\1576508938012.png" alt="1576508938012"></p>
+<h1 id="Classifier"><a href="#Classifier" class="headerlink" title="Classifier"></a>Classifier</h1>
         
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/12/08/smallRNAseq/" itemprop="url">
-              
-                <span itemprop="name">Notes for small RNA sequencing analysis</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-12-08T22:20:42+08:00"
-              content="2019-12-08" >
-          12-08
-        </time>
       </div>
-
-    </header>
-  </article>
-
-
-
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/11/13/Monocle/" itemprop="url">
-              
-                <span itemprop="name">Monocle拟时分析</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-11-13T17:41:21+08:00"
-              content="2019-11-13" >
-          11-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/11/13/Seurat/" itemprop="url">
-              
-                <span itemprop="name">Seurat单细胞分群</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-11-13T00:12:21+08:00"
-              content="2019-11-13" >
-          11-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
-
     </div>
+    
+    
+    
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
@@ -383,6 +298,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -403,8 +322,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -471,6 +399,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Dimension-Reduction"><span class="nav-number">1.</span> <span class="nav-text">Dimension Reduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Classifier"><span class="nav-number">2.</span> <span class="nav-text">Classifier</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -604,6 +548,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
