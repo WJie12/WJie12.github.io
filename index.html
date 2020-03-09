@@ -249,6 +249,204 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/09/ConvexOptimization_Introduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jie Wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WJie12">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/09/ConvexOptimization_Introduction/" itemprop="url">ConvexOptimization_Introduction</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-09T17:05:04+08:00">
+                2020-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ConvexOptimization/" itemprop="url" rel="index">
+                    <span itemprop="name">ConvexOptimization</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Optimization-problem"><a href="#Optimization-problem" class="headerlink" title="Optimization problem"></a>Optimization problem</h1><h2 id="Three-basic-elements"><a href="#Three-basic-elements" class="headerlink" title="Three basic elements"></a>Three basic elements</h2><ul>
+<li><code>variables:</code> $\boldsymbol{x}=\left(x<em>{1}, \dots, x</em>{n}\right)$ </li>
+<li><code>constraints:</code> $f_{i}: \mathbb{R}^{n} \rightarrow \mathbb{R}, i = 1,…,m$</li>
+<li><code>objective:</code> $f_{0}: \mathbb{R}^{n} \rightarrow \mathbb{R}$<h2 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h2>Find optimal solution $\boldsymbol{x}^{*}$ minimizing $f_{0}$ while satifying constraints.<h1 id="Data-science-models"><a href="#Data-science-models" class="headerlink" title="Data science models"></a>Data science models</h1><h2 id="Linear"><a href="#Linear" class="headerlink" title="Linear"></a>Linear</h2></li>
+<li>minimize $f(\boldsymbol{x})$ subject to $\boldsymbol{Ax=z}$</li>
+<li>hope $\hat{\boldsymbol{x}}=\boldsymbol{x}^{\natural}$<h2 id="Bilinear"><a href="#Bilinear" class="headerlink" title="Bilinear"></a>Bilinear</h2></li>
+<li>find $\boldsymbol{x}, \boldsymbol{h}$ subject to $z<em>{i}=\boldsymbol{b}</em>{i}^{<em>} \boldsymbol{h} \boldsymbol{x}^{</em>} \boldsymbol{a}_{i}, 1 \leq i \leq m$<h2 id="Quadratic"><a href="#Quadratic" class="headerlink" title="Quadratic"></a>Quadratic</h2></li>
+<li>find $z \quad$ subject to $y<em>{r}=\left|\left\langle\boldsymbol{a}</em>{r}, \boldsymbol{z}\right\rangle\right|^{2}, \quad r=1,2, \ldots, m$<h2 id="low-rank"><a href="#low-rank" class="headerlink" title="low -rank"></a>low -rank</h2></li>
+<li>$\underset{M \in \mathbb{C}^{m \times n}}{\operatorname{minimize}} \quad \operatorname{rank}(\boldsymbol{M}) \quad$ subject to $\quad Y<em>{i, k}=M</em>{i, k}, \quad(i, k) \in \Omega$<h2 id="deep-models"><a href="#deep-models" class="headerlink" title="deep models"></a>deep models</h2></li>
+<li>$\operatorname{minimize} \quad f(\boldsymbol{\theta}):=\frac{1}{n} \sum<em>{i=1}^{n} \ell\left(h\left(\boldsymbol{x}</em>{i}, \boldsymbol{\theta}\right), y_{i}\right)$ subject to $\mathcal{R}(\boldsymbol{\theta}) \leq \tau$<h1 id="Large-scale-optimization-classes-of-optimization-problems"><a href="#Large-scale-optimization-classes-of-optimization-problems" class="headerlink" title="Large-scale optimization: classes of optimization problems"></a>Large-scale optimization: classes of optimization problems</h1><h2 id="Constrained-vs-unconstrained"><a href="#Constrained-vs-unconstrained" class="headerlink" title="Constrained vs. unconstrained"></a>Constrained vs. unconstrained</h2></li>
+<li>Unconstrained optimization:<ul>
+<li>every point is feasible</li>
+<li>focus is on minimizing $f(\boldsymbol{x})$</li>
+</ul>
+</li>
+<li>constrained:<ul>
+<li>find constraint set $C$</li>
+<li>minimizing $f(\boldsymbol{x}), \boldsymbol{x} \in C$</li>
+<li>may be difficult to find point $\boldsymbol{x} \in C$</li>
+</ul>
+</li>
+</ul>
+<h2 id="Convex-vs-nonconvex"><a href="#Convex-vs-nonconvex" class="headerlink" title="Convex vs. nonconvex"></a>Convex vs. nonconvex</h2><ul>
+<li>convex optimization:<ul>
+<li>all local optima are global optima</li>
+<li>can be solved in polynomial-time<h2 id="deteministic-vs-stochastic"><a href="#deteministic-vs-stochastic" class="headerlink" title="deteministic vs. stochastic"></a>deteministic vs. stochastic</h2></li>
+</ul>
+</li>
+<li>stochastic gradient<h2 id="solvability-vs-saclability"><a href="#solvability-vs-saclability" class="headerlink" title="solvability vs. saclability"></a>solvability vs. saclability</h2></li>
+<li>Polynomial-time algorithms might be useless in large-scale applications (iteration -)<ul>
+<li>example: Newton’s method</li>
+<li>a single iteration may last forever (time +)</li>
+<li>prohibitive storage requirement (space +)</li>
+</ul>
+</li>
+<li>Iteration complexity vs. per-iteration cost<ul>
+<li>computational cost = iteration complexity (#iterations) $\times$ cost per iteration</li>
+</ul>
+</li>
+<li>Large-scale problems call for methods with ==cheap iterations==<ul>
+<li>First-order methods: exploit only information on <code>function values</code> and <code>(sub)gradients</code> without Hessian information<ul>
+<li>cheap iterations</li>
+<li>low memory requirements</li>
+</ul>
+</li>
+<li>Randomized and approximation methods: project data into subspace, and ==solve reduced dimension problem==<ul>
+<li>optimization for high-dimensional data analysis: polynomial-time algorithms often not fast enough: ==further approximations== are essential</li>
+</ul>
+</li>
+<li>Adavanced large-scale optimization<ul>
+<li>randomized methods; nonconvex optimization on manifold; learning to optimize; deep reinforcement learning</li>
+<li>goal: scalable, real-time, parallel, distributed, automatic, etc.<h1 id="High-dimensional-statistics"><a href="#High-dimensional-statistics" class="headerlink" title="High-dimensional statistics"></a>High-dimensional statistics</h1><h2 id="Convex-geometry"><a href="#Convex-geometry" class="headerlink" title="Convex geometry"></a>Convex geometry</h2><h2 id="Local-geometry"><a href="#Local-geometry" class="headerlink" title="Local geometry"></a>Local geometry</h2><h2 id="Global-geometry"><a href="#Global-geometry" class="headerlink" title="Global geometry"></a>Global geometry</h2><h1 id="Topics-and-grading"><a href="#Topics-and-grading" class="headerlink" title="Topics and grading"></a>Topics and grading</h1><h2 id="Theoretical-foundations"><a href="#Theoretical-foundations" class="headerlink" title="Theoretical foundations"></a>Theoretical foundations</h2>convex sets, convex functions, convex problems, lagrange duality and KKT conditions, disciplined convex programming<h2 id="first-order-methods"><a href="#first-order-methods" class="headerlink" title="first-order methods"></a>first-order methods</h2>gradient methods, subgradient methods, proximal methods<h2 id="second-order-methods"><a href="#second-order-methods" class="headerlink" title="second-order methods"></a>second-order methods</h2>Newton methods, interior-point methods, quasi-Newton methods<h2 id="stochastic-methods"><a href="#stochastic-methods" class="headerlink" title="stochastic methods"></a>stochastic methods</h2>stochastic gradient methods, stochastic Newton methods, randomized sketching methods, randomized linear algebra<h2 id="machine-learning-approaches"><a href="#machine-learning-approaches" class="headerlink" title="machine learning approaches"></a>machine learning approaches</h2><h2 id="applications"><a href="#applications" class="headerlink" title="applications"></a>applications</h2></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/19/RL4PM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1951,7 +2149,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1962,7 +2160,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>

@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Optimization problemThree basic elements variables: $\boldsymbol{x}=\left(x{1}, \dots, x{n}\right)$  constraints: $f_{i}: \mathbb{R}^{n} \rightarrow \mathbb{R}, i = 1,…,m$ objective: $f_{0}: \mathbb{R">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ConvexOptimization_Introduction">
+<meta property="og:url" content="http://yoursite.com/2020/03/09/ConvexOptimization_Introduction/index.html">
+<meta property="og:site_name" content="WJie12">
+<meta property="og:description" content="Optimization problemThree basic elements variables: $\boldsymbol{x}=\left(x{1}, \dots, x{n}\right)$  constraints: $f_{i}: \mathbb{R}^{n} \rightarrow \mathbb{R}, i = 1,…,m$ objective: $f_{0}: \mathbb{R">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-03-09T09:19:37.231Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ConvexOptimization_Introduction">
+<meta name="twitter:description" content="Optimization problemThree basic elements variables: $\boldsymbol{x}=\left(x{1}, \dots, x{n}\right)$  constraints: $f_{i}: \mathbb{R}^{n} \rightarrow \mathbb{R}, i = 1,…,m$ objective: $f_{0}: \mathbb{R">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/09/ConvexOptimization_Introduction/"/>
+
+
+
+
+
+  <title>ConvexOptimization_Introduction | WJie12</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WJie12</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/09/ConvexOptimization_Introduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jie Wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WJie12">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ConvexOptimization_Introduction</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-09T17:05:04+08:00">
+                2020-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ConvexOptimization/" itemprop="url" rel="index">
+                    <span itemprop="name">ConvexOptimization</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Optimization-problem"><a href="#Optimization-problem" class="headerlink" title="Optimization problem"></a>Optimization problem</h1><h2 id="Three-basic-elements"><a href="#Three-basic-elements" class="headerlink" title="Three basic elements"></a>Three basic elements</h2><ul>
+<li><code>variables:</code> $\boldsymbol{x}=\left(x<em>{1}, \dots, x</em>{n}\right)$ </li>
+<li><code>constraints:</code> $f_{i}: \mathbb{R}^{n} \rightarrow \mathbb{R}, i = 1,…,m$</li>
+<li><code>objective:</code> $f_{0}: \mathbb{R}^{n} \rightarrow \mathbb{R}$<h2 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h2>Find optimal solution $\boldsymbol{x}^{*}$ minimizing $f_{0}$ while satifying constraints.<h1 id="Data-science-models"><a href="#Data-science-models" class="headerlink" title="Data science models"></a>Data science models</h1><h2 id="Linear"><a href="#Linear" class="headerlink" title="Linear"></a>Linear</h2></li>
+<li>minimize $f(\boldsymbol{x})$ subject to $\boldsymbol{Ax=z}$</li>
+<li>hope $\hat{\boldsymbol{x}}=\boldsymbol{x}^{\natural}$<h2 id="Bilinear"><a href="#Bilinear" class="headerlink" title="Bilinear"></a>Bilinear</h2></li>
+<li>find $\boldsymbol{x}, \boldsymbol{h}$ subject to $z<em>{i}=\boldsymbol{b}</em>{i}^{<em>} \boldsymbol{h} \boldsymbol{x}^{</em>} \boldsymbol{a}_{i}, 1 \leq i \leq m$<h2 id="Quadratic"><a href="#Quadratic" class="headerlink" title="Quadratic"></a>Quadratic</h2></li>
+<li>find $z \quad$ subject to $y<em>{r}=\left|\left\langle\boldsymbol{a}</em>{r}, \boldsymbol{z}\right\rangle\right|^{2}, \quad r=1,2, \ldots, m$<h2 id="low-rank"><a href="#low-rank" class="headerlink" title="low -rank"></a>low -rank</h2></li>
+<li>$\underset{M \in \mathbb{C}^{m \times n}}{\operatorname{minimize}} \quad \operatorname{rank}(\boldsymbol{M}) \quad$ subject to $\quad Y<em>{i, k}=M</em>{i, k}, \quad(i, k) \in \Omega$<h2 id="deep-models"><a href="#deep-models" class="headerlink" title="deep models"></a>deep models</h2></li>
+<li>$\operatorname{minimize} \quad f(\boldsymbol{\theta}):=\frac{1}{n} \sum<em>{i=1}^{n} \ell\left(h\left(\boldsymbol{x}</em>{i}, \boldsymbol{\theta}\right), y_{i}\right)$ subject to $\mathcal{R}(\boldsymbol{\theta}) \leq \tau$<h1 id="Large-scale-optimization-classes-of-optimization-problems"><a href="#Large-scale-optimization-classes-of-optimization-problems" class="headerlink" title="Large-scale optimization: classes of optimization problems"></a>Large-scale optimization: classes of optimization problems</h1><h2 id="Constrained-vs-unconstrained"><a href="#Constrained-vs-unconstrained" class="headerlink" title="Constrained vs. unconstrained"></a>Constrained vs. unconstrained</h2></li>
+<li>Unconstrained optimization:<ul>
+<li>every point is feasible</li>
+<li>focus is on minimizing $f(\boldsymbol{x})$</li>
+</ul>
+</li>
+<li>constrained:<ul>
+<li>find constraint set $C$</li>
+<li>minimizing $f(\boldsymbol{x}), \boldsymbol{x} \in C$</li>
+<li>may be difficult to find point $\boldsymbol{x} \in C$</li>
+</ul>
+</li>
+</ul>
+<h2 id="Convex-vs-nonconvex"><a href="#Convex-vs-nonconvex" class="headerlink" title="Convex vs. nonconvex"></a>Convex vs. nonconvex</h2><ul>
+<li>convex optimization:<ul>
+<li>all local optima are global optima</li>
+<li>can be solved in polynomial-time<h2 id="deteministic-vs-stochastic"><a href="#deteministic-vs-stochastic" class="headerlink" title="deteministic vs. stochastic"></a>deteministic vs. stochastic</h2></li>
+</ul>
+</li>
+<li>stochastic gradient<h2 id="solvability-vs-saclability"><a href="#solvability-vs-saclability" class="headerlink" title="solvability vs. saclability"></a>solvability vs. saclability</h2></li>
+<li>Polynomial-time algorithms might be useless in large-scale applications (iteration -)<ul>
+<li>example: Newton’s method</li>
+<li>a single iteration may last forever (time +)</li>
+<li>prohibitive storage requirement (space +)</li>
+</ul>
+</li>
+<li>Iteration complexity vs. per-iteration cost<ul>
+<li>computational cost = iteration complexity (#iterations) $\times$ cost per iteration</li>
+</ul>
+</li>
+<li>Large-scale problems call for methods with ==cheap iterations==<ul>
+<li>First-order methods: exploit only information on <code>function values</code> and <code>(sub)gradients</code> without Hessian information<ul>
+<li>cheap iterations</li>
+<li>low memory requirements</li>
+</ul>
+</li>
+<li>Randomized and approximation methods: project data into subspace, and ==solve reduced dimension problem==<ul>
+<li>optimization for high-dimensional data analysis: polynomial-time algorithms often not fast enough: ==further approximations== are essential</li>
+</ul>
+</li>
+<li>Adavanced large-scale optimization<ul>
+<li>randomized methods; nonconvex optimization on manifold; learning to optimize; deep reinforcement learning</li>
+<li>goal: scalable, real-time, parallel, distributed, automatic, etc.<h1 id="High-dimensional-statistics"><a href="#High-dimensional-statistics" class="headerlink" title="High-dimensional statistics"></a>High-dimensional statistics</h1><h2 id="Convex-geometry"><a href="#Convex-geometry" class="headerlink" title="Convex geometry"></a>Convex geometry</h2><h2 id="Local-geometry"><a href="#Local-geometry" class="headerlink" title="Local geometry"></a>Local geometry</h2><h2 id="Global-geometry"><a href="#Global-geometry" class="headerlink" title="Global geometry"></a>Global geometry</h2><h1 id="Topics-and-grading"><a href="#Topics-and-grading" class="headerlink" title="Topics and grading"></a>Topics and grading</h1><h2 id="Theoretical-foundations"><a href="#Theoretical-foundations" class="headerlink" title="Theoretical foundations"></a>Theoretical foundations</h2>convex sets, convex functions, convex problems, lagrange duality and KKT conditions, disciplined convex programming<h2 id="first-order-methods"><a href="#first-order-methods" class="headerlink" title="first-order methods"></a>first-order methods</h2>gradient methods, subgradient methods, proximal methods<h2 id="second-order-methods"><a href="#second-order-methods" class="headerlink" title="second-order methods"></a>second-order methods</h2>Newton methods, interior-point methods, quasi-Newton methods<h2 id="stochastic-methods"><a href="#stochastic-methods" class="headerlink" title="stochastic methods"></a>stochastic methods</h2>stochastic gradient methods, stochastic Newton methods, randomized sketching methods, randomized linear algebra<h2 id="machine-learning-approaches"><a href="#machine-learning-approaches" class="headerlink" title="machine learning approaches"></a>machine learning approaches</h2><h2 id="applications"><a href="#applications" class="headerlink" title="applications"></a>applications</h2></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/19/RL4PM/" rel="next" title="Deep Reinforcement Learning in Portfolio Management">
+                <i class="fa fa-chevron-left"></i> Deep Reinforcement Learning in Portfolio Management
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Jie Wang</p>
+              <p class="site-description motion-element" itemprop="description">太阳强烈 水波温柔</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/WJie12" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:summerwangjie@outlook.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Optimization-problem"><span class="nav-number">1.</span> <span class="nav-text">Optimization problem</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Three-basic-elements"><span class="nav-number">1.1.</span> <span class="nav-text">Three basic elements</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Goal"><span class="nav-number">1.2.</span> <span class="nav-text">Goal</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Data-science-models"><span class="nav-number">2.</span> <span class="nav-text">Data science models</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linear"><span class="nav-number">2.1.</span> <span class="nav-text">Linear</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bilinear"><span class="nav-number">2.2.</span> <span class="nav-text">Bilinear</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Quadratic"><span class="nav-number">2.3.</span> <span class="nav-text">Quadratic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#low-rank"><span class="nav-number">2.4.</span> <span class="nav-text">low -rank</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deep-models"><span class="nav-number">2.5.</span> <span class="nav-text">deep models</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Large-scale-optimization-classes-of-optimization-problems"><span class="nav-number">3.</span> <span class="nav-text">Large-scale optimization: classes of optimization problems</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Constrained-vs-unconstrained"><span class="nav-number">3.1.</span> <span class="nav-text">Constrained vs. unconstrained</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Convex-vs-nonconvex"><span class="nav-number">3.2.</span> <span class="nav-text">Convex vs. nonconvex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deteministic-vs-stochastic"><span class="nav-number">3.3.</span> <span class="nav-text">deteministic vs. stochastic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solvability-vs-saclability"><span class="nav-number">3.4.</span> <span class="nav-text">solvability vs. saclability</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#High-dimensional-statistics"><span class="nav-number">4.</span> <span class="nav-text">High-dimensional statistics</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Convex-geometry"><span class="nav-number">4.1.</span> <span class="nav-text">Convex geometry</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Local-geometry"><span class="nav-number">4.2.</span> <span class="nav-text">Local geometry</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Global-geometry"><span class="nav-number">4.3.</span> <span class="nav-text">Global geometry</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Topics-and-grading"><span class="nav-number">5.</span> <span class="nav-text">Topics and grading</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Theoretical-foundations"><span class="nav-number">5.1.</span> <span class="nav-text">Theoretical foundations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#first-order-methods"><span class="nav-number">5.2.</span> <span class="nav-text">first-order methods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#second-order-methods"><span class="nav-number">5.3.</span> <span class="nav-text">second-order methods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stochastic-methods"><span class="nav-number">5.4.</span> <span class="nav-text">stochastic methods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#machine-learning-approaches"><span class="nav-number">5.5.</span> <span class="nav-text">machine learning approaches</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#applications"><span class="nav-number">5.6.</span> <span class="nav-text">applications</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WJie12</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
