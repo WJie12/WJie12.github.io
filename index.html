@@ -850,6 +850,7 @@
 <img src="/2019/12/08/smallRNAseq/samllrnq.jpg" alt="workflow" title="workflow">
 <h1 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h1><h2 id="Preprocessing"><a href="#Preprocessing" class="headerlink" title="Preprocessing"></a>Preprocessing</h2><p>The preprocessing phase includes three parts: adapter extraction, quality control, UMI extraction. At first, adapters in 3’ end and 5’ end are removed by Cutadapt and then only reads whose length within 27~55nt are retained. Finally, UMIs in both 3’ end and 5’ end are extracted from sequence reads and add to read names with UMI-tools. At the UMI extraction step, reads with poor quality are dropped at the same time by UMI-tools.</p>
 <p>Software and parameters used in this phase:</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -876,42 +877,44 @@
 </tr>
 <tr>
 <td></td>
-<td>–overlap=3</td>
+<td>—overlap=3</td>
 <td>require at least three bases match between adapter and read</td>
 </tr>
 <tr>
 <td></td>
-<td>–error-rate=0.1</td>
+<td>—error-rate=0.1</td>
 <td>the level of error tolerance (mismatch) in adapter sequences searching</td>
 </tr>
 <tr>
 <td></td>
-<td>–times=1</td>
+<td>—times=1</td>
 <td>trim no more than one adapter from each reads</td>
 </tr>
 <tr>
 <td></td>
-<td>–minimum-length=27 –maximum-length=55</td>
+<td>—minimum-length=27 —maximum-length=55</td>
 <td>drop reads shorter than 27nt or longer than 55 nt</td>
 </tr>
 <tr>
 <td>UMI-tools extract</td>
-<td>–bc-pattern=NNNNNNNNN             –3prime</td>
+<td>—bc-pattern=NNNNNNNNN             —3prime</td>
 <td>extract 9nt as UMI from 3’ end</td>
 </tr>
 <tr>
 <td></td>
-<td>–bc-pattern=NNNNNN</td>
+<td>—bc-pattern=NNNNNN</td>
 <td>extract 6nt as UMI from 5’ end</td>
 </tr>
 <tr>
 <td></td>
-<td>–quality-filter-threshold 20</td>
+<td>—quality-filter-threshold 20</td>
 <td>filter low quality reads</td>
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="Mapping"><a href="#Mapping" class="headerlink" title="Mapping"></a>Mapping</h2><p>The preprocessed reads are still in FASTQ format. The reads are aligned to genome and RNA databases with Bowtie, respectively. The following table lists the reference libraries we use in alignment. After aligning to references, the duplicate reads (reads with the same alignment position and UMI) will be dropped by umi_tools. After mapping, we can get the annotated reads in SAM format.</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -946,7 +949,9 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p>Software and parameters used in this phase:</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -963,7 +968,7 @@
 </tr>
 <tr>
 <td></td>
-<td>–threads 40</td>
+<td>—threads 40</td>
 <td>run in 40 threads</td>
 </tr>
 <tr>
@@ -988,16 +993,17 @@
 </tr>
 <tr>
 <td>UMI-tools dedup</td>
-<td>–method=unique</td>
+<td>—method=unique</td>
 <td>do not consider the sequencing mistakes in UMIs</td>
 </tr>
 <tr>
 <td></td>
-<td>–read-length</td>
+<td>—read-length</td>
 <td>duplicate reads must have the same length</td>
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h2><p>With the SAM format files in the mapping phase, we can count the reads. The reads with the same annotation will be counted as the same RNA. Pie graphs to visualize the percentage of different types of RNAs are plotted based on the counts. Besides counting the reads that mapping to the RNA databases, we can also filter the sequences that can be aligned to the genome but not to RNA databases. The statistics results are saved in y_rnadb_y_genome.csv and n_rnadb_y_genome.csv. The statistic and visualization are conducted with Python scripts. </p>
 <h1 id="Implement"><a href="#Implement" class="headerlink" title="Implement"></a>Implement</h1><p>The preprocessing phase and mapping phase are implemented by Shell scripts, and the analysis phase is implemented by Python scripts. The source code and more details of these scripts can be found in <a href="https://github.com/WJie12/SmallRNASeq" target="_blank" rel="external">SmallRNASeq</a>. </p>
 <p>Full analysis results of samples can be found in the attachment.</p>
@@ -1612,7 +1618,7 @@
 <p>根据每个群找出来的biomarker来判断每个细胞群的细胞类型。</p>
 <p>需要结合额外的背景知识，可以查阅文献和数据库<a href="http://biocc.hrbmu.edu.cn/CellMarker/" target="_blank" rel="external">CellMarker</a>。</p>
 <p>官网给出的背景知识：</p>
-<p>| Cluster ID | Markers       | Cell Type    |<br>| :——— | :———— | :———– |<br>| 0          | IL7R, CCR7    | Naive CD4+ T |<br>| 1          | IL7R, S100A4  | Memory CD4+  |<br>| 2          | CD14, LYZ     | CD14+ Mono   |<br>| 3          | MS4A1         | B            |<br>| 4          | CD8A          | CD8+ T       |<br>| 5          | FCGR3A, MS4A7 | FCGR3A+ Mono |<br>| 6          | GNLY, NKG7    | NK           |<br>| 7          | FCER1A, CST3  | DC           |<br>| 8          | PPBP          | Platelet     |</p>
+<p>| Cluster ID | Markers       | Cell Type    |<br>| :————- | :—————— | :—————- |<br>| 0          | IL7R, CCR7    | Naive CD4+ T |<br>| 1          | IL7R, S100A4  | Memory CD4+  |<br>| 2          | CD14, LYZ     | CD14+ Mono   |<br>| 3          | MS4A1         | B            |<br>| 4          | CD8A          | CD8+ T       |<br>| 5          | FCGR3A, MS4A7 | FCGR3A+ Mono |<br>| 6          | GNLY, NKG7    | NK           |<br>| 7          | FCER1A, CST3  | DC           |<br>| 8          | PPBP          | Platelet     |</p>
 <p>给群添加细胞类型标签(Cell Type)</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt; new.cluster.ids &lt;- c(<span class="string">"Naive CD4 T"</span>, <span class="string">"Memory CD4 T"</span>, <span class="string">"CD14+ Mono"</span>, <span class="string">"B"</span>, <span class="string">"CD8 T"</span>, <span class="string">"FCGR3A+ Mono"</span>, <span class="string">"NK"</span>, <span class="string">"DC"</span>, <span class="string">"Platelet"</span>)</div><div class="line">names(new.cluster.ids) &lt;- levels(pbmc)</div><div class="line">&gt; pbmc &lt;- RenameIdents(pbmc, new.cluster.ids)</div><div class="line">&gt; DimPlot(pbmc, reduction = <span class="string">"tsne"</span>, label = <span class="literal">TRUE</span>, pt.size = <span class="number">1.5</span>) + NoLegend()</div></pre></td></tr></table></figure>
 </li>
@@ -2073,7 +2079,7 @@
       
         
           
-            <p>HELLO WORLD! —WJ</p>
+            <p>HELLO WORLD! —-WJ</p>
 
           
         
@@ -2353,7 +2359,24 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
 

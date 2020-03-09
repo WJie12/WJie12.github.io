@@ -608,7 +608,7 @@
 <p>根据每个群找出来的biomarker来判断每个细胞群的细胞类型。</p>
 <p>需要结合额外的背景知识，可以查阅文献和数据库<a href="http://biocc.hrbmu.edu.cn/CellMarker/" target="_blank" rel="external">CellMarker</a>。</p>
 <p>官网给出的背景知识：</p>
-<p>| Cluster ID | Markers       | Cell Type    |<br>| :——— | :———— | :———– |<br>| 0          | IL7R, CCR7    | Naive CD4+ T |<br>| 1          | IL7R, S100A4  | Memory CD4+  |<br>| 2          | CD14, LYZ     | CD14+ Mono   |<br>| 3          | MS4A1         | B            |<br>| 4          | CD8A          | CD8+ T       |<br>| 5          | FCGR3A, MS4A7 | FCGR3A+ Mono |<br>| 6          | GNLY, NKG7    | NK           |<br>| 7          | FCER1A, CST3  | DC           |<br>| 8          | PPBP          | Platelet     |</p>
+<p>| Cluster ID | Markers       | Cell Type    |<br>| :————- | :—————— | :—————- |<br>| 0          | IL7R, CCR7    | Naive CD4+ T |<br>| 1          | IL7R, S100A4  | Memory CD4+  |<br>| 2          | CD14, LYZ     | CD14+ Mono   |<br>| 3          | MS4A1         | B            |<br>| 4          | CD8A          | CD8+ T       |<br>| 5          | FCGR3A, MS4A7 | FCGR3A+ Mono |<br>| 6          | GNLY, NKG7    | NK           |<br>| 7          | FCER1A, CST3  | DC           |<br>| 8          | PPBP          | Platelet     |</p>
 <p>给群添加细胞类型标签(Cell Type)</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt; new.cluster.ids &lt;- c(<span class="string">"Naive CD4 T"</span>, <span class="string">"Memory CD4 T"</span>, <span class="string">"CD14+ Mono"</span>, <span class="string">"B"</span>, <span class="string">"CD8 T"</span>, <span class="string">"FCGR3A+ Mono"</span>, <span class="string">"NK"</span>, <span class="string">"DC"</span>, <span class="string">"Platelet"</span>)</div><div class="line">names(new.cluster.ids) &lt;- levels(pbmc)</div><div class="line">&gt; pbmc &lt;- RenameIdents(pbmc, new.cluster.ids)</div><div class="line">&gt; DimPlot(pbmc, reduction = <span class="string">"tsne"</span>, label = <span class="literal">TRUE</span>, pt.size = <span class="number">1.5</span>) + NoLegend()</div></pre></td></tr></table></figure>
 </li>
@@ -937,7 +937,24 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
 

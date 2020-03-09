@@ -351,6 +351,7 @@
 <img src="/2019/12/08/smallRNAseq/samllrnq.jpg" alt="workflow" title="workflow">
 <h1 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h1><h2 id="Preprocessing"><a href="#Preprocessing" class="headerlink" title="Preprocessing"></a>Preprocessing</h2><p>The preprocessing phase includes three parts: adapter extraction, quality control, UMI extraction. At first, adapters in 3’ end and 5’ end are removed by Cutadapt and then only reads whose length within 27~55nt are retained. Finally, UMIs in both 3’ end and 5’ end are extracted from sequence reads and add to read names with UMI-tools. At the UMI extraction step, reads with poor quality are dropped at the same time by UMI-tools.</p>
 <p>Software and parameters used in this phase:</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -377,42 +378,44 @@
 </tr>
 <tr>
 <td></td>
-<td>–overlap=3</td>
+<td>—overlap=3</td>
 <td>require at least three bases match between adapter and read</td>
 </tr>
 <tr>
 <td></td>
-<td>–error-rate=0.1</td>
+<td>—error-rate=0.1</td>
 <td>the level of error tolerance (mismatch) in adapter sequences searching</td>
 </tr>
 <tr>
 <td></td>
-<td>–times=1</td>
+<td>—times=1</td>
 <td>trim no more than one adapter from each reads</td>
 </tr>
 <tr>
 <td></td>
-<td>–minimum-length=27 –maximum-length=55</td>
+<td>—minimum-length=27 —maximum-length=55</td>
 <td>drop reads shorter than 27nt or longer than 55 nt</td>
 </tr>
 <tr>
 <td>UMI-tools extract</td>
-<td>–bc-pattern=NNNNNNNNN             –3prime</td>
+<td>—bc-pattern=NNNNNNNNN             —3prime</td>
 <td>extract 9nt as UMI from 3’ end</td>
 </tr>
 <tr>
 <td></td>
-<td>–bc-pattern=NNNNNN</td>
+<td>—bc-pattern=NNNNNN</td>
 <td>extract 6nt as UMI from 5’ end</td>
 </tr>
 <tr>
 <td></td>
-<td>–quality-filter-threshold 20</td>
+<td>—quality-filter-threshold 20</td>
 <td>filter low quality reads</td>
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="Mapping"><a href="#Mapping" class="headerlink" title="Mapping"></a>Mapping</h2><p>The preprocessed reads are still in FASTQ format. The reads are aligned to genome and RNA databases with Bowtie, respectively. The following table lists the reference libraries we use in alignment. After aligning to references, the duplicate reads (reads with the same alignment position and UMI) will be dropped by umi_tools. After mapping, we can get the annotated reads in SAM format.</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -447,7 +450,9 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p>Software and parameters used in this phase:</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -464,7 +469,7 @@
 </tr>
 <tr>
 <td></td>
-<td>–threads 40</td>
+<td>—threads 40</td>
 <td>run in 40 threads</td>
 </tr>
 <tr>
@@ -489,16 +494,17 @@
 </tr>
 <tr>
 <td>UMI-tools dedup</td>
-<td>–method=unique</td>
+<td>—method=unique</td>
 <td>do not consider the sequencing mistakes in UMIs</td>
 </tr>
 <tr>
 <td></td>
-<td>–read-length</td>
+<td>—read-length</td>
 <td>duplicate reads must have the same length</td>
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h2><p>With the SAM format files in the mapping phase, we can count the reads. The reads with the same annotation will be counted as the same RNA. Pie graphs to visualize the percentage of different types of RNAs are plotted based on the counts. Besides counting the reads that mapping to the RNA databases, we can also filter the sequences that can be aligned to the genome but not to RNA databases. The statistics results are saved in y_rnadb_y_genome.csv and n_rnadb_y_genome.csv. The statistic and visualization are conducted with Python scripts. </p>
 <h1 id="Implement"><a href="#Implement" class="headerlink" title="Implement"></a>Implement</h1><p>The preprocessing phase and mapping phase are implemented by Shell scripts, and the analysis phase is implemented by Python scripts. The source code and more details of these scripts can be found in <a href="https://github.com/WJie12/SmallRNASeq" target="_blank" rel="external">SmallRNASeq</a>. </p>
 <p>Full analysis results of samples can be found in the attachment.</p>
@@ -842,7 +848,24 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
 
