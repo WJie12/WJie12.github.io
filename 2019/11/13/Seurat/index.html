@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言  数据：10X官方提供的PBMC数据集，2700个外周血单核细胞（PBMC，Peripheral Blood Mononuclear Cells）公共数据，使用Illumina NextSeq 500测序。  原始教程和代码：Seurat - Guided Clustering Tutorial  1234hg19|__barcodes.tsv|__genes.tsv|__matrix.m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Seurat单细胞分群">
+<meta property="og:url" content="http://yoursite.com/2019/11/13/Seurat/index.html">
+<meta property="og:site_name" content="WJie12">
+<meta property="og:description" content="前言  数据：10X官方提供的PBMC数据集，2700个外周血单核细胞（PBMC，Peripheral Blood Mononuclear Cells）公共数据，使用Illumina NextSeq 500测序。  原始教程和代码：Seurat - Guided Clustering Tutorial  1234hg19|__barcodes.tsv|__genes.tsv|__matrix.m">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/pic/RplotVlinPlot_percentage_MT.png">
+<meta property="og:image" content="http://yoursite.com/pic/Rplot_combinePlots_scatter.png">
+<meta property="og:image" content="http://yoursite.com/pic/Rplot_VariableFeaturePlot_Top10HVGs.png">
+<meta property="og:image" content="http://yoursite.com/pic/VizDimLoading.png">
+<meta property="og:image" content="http://yoursite.com/pic/DimPlot.png">
+<meta property="og:image" content="http://yoursite.com/pic/DimHeatMap1.png">
+<meta property="og:image" content="http://yoursite.com/pic/DimHeatMap15.png">
+<meta property="og:image" content="http://yoursite.com/pic/ElbowPlot.png">
+<meta property="og:image" content="http://yoursite.com/pic/Rplot_umap.png">
+<meta property="og:image" content="http://yoursite.com/pic/Rplot_cluster_tsne.png">
+<meta property="og:image" content="http://yoursite.com/pic/FeaturePlot.png">
+<meta property="og:image" content="http://yoursite.com/pic/Rplot_vln.png">
+<meta property="og:image" content="http://yoursite.com/pic/Rplot_vln2.png">
+<meta property="og:image" content="http://yoursite.com/pic/DoHeatMap.png">
+<meta property="og:image" content="http://yoursite.com/pic/DotPlot.png">
+<meta property="og:image" content="http://yoursite.com/pic/Ridge_Plot.png">
+<meta property="og:updated_time" content="2019-11-13T10:05:32.204Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Seurat单细胞分群">
+<meta name="twitter:description" content="前言  数据：10X官方提供的PBMC数据集，2700个外周血单核细胞（PBMC，Peripheral Blood Mononuclear Cells）公共数据，使用Illumina NextSeq 500测序。  原始教程和代码：Seurat - Guided Clustering Tutorial  1234hg19|__barcodes.tsv|__genes.tsv|__matrix.m">
+<meta name="twitter:image" content="http://yoursite.com/pic/RplotVlinPlot_percentage_MT.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/11/13/Seurat/">
+
+
+
+
+
+  <title>Seurat单细胞分群 | WJie12</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WJie12</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/13/Seurat/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jie Wang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WJie12">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Seurat单细胞分群</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-13T00:12:21+08:00">
+                2019-11-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index">
+                    <span itemprop="name">Bioinformatics</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ol>
+<li><p>前言</p>
+<p> 数据：10X官方提供的<a href="https://s3-us-west-2.amazonaws.com/10x.files/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz" target="_blank" rel="noopener">PBMC数据集</a>，2700个外周血单核细胞（PBMC，Peripheral Blood Mononuclear Cells）公共数据，使用Illumina NextSeq 500测序。</p>
+<p> 原始教程和代码：<a href="https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html" target="_blank" rel="noopener">Seurat - Guided Clustering Tutorial</a></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hg19</span><br><span class="line">|__barcodes.tsv</span><br><span class="line">|__genes.tsv</span><br><span class="line">|__matrix.mtx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>数据读取</p>
+<p>读入pbmc数据。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; pbmc.data &lt;- Read10X(data.dir = <span class="string">"./data/pbmc3k_filtered_gene_bc_matrices/filtered_gene_bc_matrices/hg19/"</span>)</span><br></pre></td></tr></table></figure>
+<p>查看稀疏矩阵的维度,即基因数和细胞数。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; dim(pbmc.data)</span><br><span class="line">[<span class="number">1</span>] <span class="number">32738</span>  <span class="number">2700</span></span><br></pre></td></tr></table></figure>
+<p>查看矩阵的1-5行，1-3列。</p>
+<blockquote>
+<p>“ · ”表示没有检测到，也就是0。这样表示是为了压缩空间。</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; pbmc.data[<span class="number">1</span>:<span class="number">5</span>,<span class="number">1</span>:<span class="number">3</span>]</span><br><span class="line"><span class="number">5</span> x <span class="number">3</span> sparse Matrix of class <span class="string">"dgCMatrix"</span></span><br><span class="line">             AAACATACAACCAC AAACATTGAGCTAC AAACATTGATCAGC</span><br><span class="line">MIR1302-<span class="number">10</span>                .              .              .</span><br><span class="line">FAM138A                   .              .              .</span><br><span class="line">OR4F5                     .              .              .</span><br><span class="line">RP11-34P13.7              .              .              .</span><br><span class="line">RP11-34P13.8              .              .              .</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>预处理：质控和数据筛选</p>
+<p>创建Seurat对象</p>
+<blockquote>
+<p>project是对象的名字，可以用来标识不同的样本</p>
+<p>min.cell: 单个基因在小于等于3个细胞中测到就丢弃</p>
+<p>min.features: 单个细胞测到小于等于200个基因说明可能是死细胞也丢弃</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; pbmc &lt;- CreateSeuratObject(counts = pbmc.data, project = <span class="string">"pbmc3k"</span>, min.cells = <span class="number">3</span>, min.features = <span class="number">200</span>)</span><br><span class="line">An object of class Seurat </span><br><span class="line"><span class="number">13714</span> features across <span class="number">2700</span> samples within <span class="number">1</span> assay </span><br><span class="line">Active assay: RNA (<span class="number">13714</span> features)</span><br></pre></td></tr></table></figure>
+<p>计算每个细胞的线粒体基因转录本数的百分比（%）</p>
+<blockquote>
+<p>使用[[ ]] 操作符存放到metadata中</p>
+<p>线粒体很多说明细胞可能是死细胞或者活性太低</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; pbmc[[<span class="string">"percent.mt"</span>]] &lt;- PercentageFeatureSet(pbmc, pattern = <span class="string">"^MT-"</span>)</span><br></pre></td></tr></table></figure>
+<p>检查一下metadata</p>
+<blockquote>
+<p>查看metadata前三行</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; head(pbmc@meta.data, <span class="number">3</span>)</span><br><span class="line">               orig.ident nCount_RNA nFeature_RNA percent.mt</span><br><span class="line">AAACATACAACCAC     pbmc3k       <span class="number">2419</span>          <span class="number">779</span>  <span class="number">3.0177759</span></span><br><span class="line">AAACATTGAGCTAC     pbmc3k       <span class="number">4903</span>         <span class="number">1352</span>  <span class="number">3.7935958</span></span><br><span class="line">AAACATTGATCAGC     pbmc3k       <span class="number">3147</span>         <span class="number">1129</span>  <span class="number">0.8897363</span></span><br></pre></td></tr></table></figure>
+<p>展示基因及线粒体百分比</p>
+<blockquote>
+<p>从图中得到过滤信息：观察数据的分布范围，异常数据要过滤掉</p>
+<p>单个细胞基因数目nFeature_RNA：200-2500</p>
+<p>线粒体占比percent.mt：小于5%</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; VlnPlot(pbmc, features = c(<span class="string">"nFeature_RNA"</span>, <span class="string">"nCount_RNA"</span>, <span class="string">"percent.mt"</span>), ncol = <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/pic/RplotVlinPlot_percentage_MT.png" alt="RplotVlinPlot_percentage_MT"></p>
+<p>用散点图（FeatureScatter）来绘制两组feature信息的相关性,组合在一起（CombinePlots）显示</p>
+<blockquote>
+<p>左图：reads count值和在线粒体的reads数量一般成反比，线粒体reads占比很高的情况一般有表达量的reads数很少</p>
+<p>右图：基因(feature)数量一般会和reads count值成正比</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; plot1 &lt;- FeatureScatter(pbmc, feature1 = <span class="string">"nCount_RNA"</span>, feature2 = <span class="string">"percent.mt"</span>)</span><br><span class="line">&gt; plot2 &lt;- FeatureScatter(pbmc, feature1 = <span class="string">"nCount_RNA"</span>, feature2 = <span class="string">"nFeature_RNA"</span>)</span><br><span class="line">&gt; CombinePlots(plots = list(plot1, plot2))</span><br></pre></td></tr></table></figure>
+<p><img src="/pic/Rplot_combinePlots_scatter.png" alt="Rplot_combinePlots_scatter"></p>
+<p>过滤细胞：</p>
+<blockquote>
+<p>保留gene数大于200小于2500的细胞，目的是去掉空GEMs和1个GEMs包含2个以上细胞的数</p>
+<p>保留线粒体基因的转录本数低于5%的细胞，目的是过滤掉死细胞等低质量的细胞数据。</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; pbmc &lt;- subset(pbmc, subset = nFeature_RNA &gt; <span class="number">200</span> &amp; nFeature_RNA &lt; <span class="number">2500</span> &amp; percent.mt &lt; <span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<p>表达量数据标准化</p>
+<blockquote>
+<p>LogNormalize的算法：A = log( 1 + ( UMIA ÷ UMITotal ) × 10000 )</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pbmc &lt;- NormalizeData(pbmc, normalization.method = <span class="string">"LogNormalize"</span>, scale.factor = <span class="number">10000</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>差异表达分析</p>
+<p>数据标准化：归一化</p>
+<blockquote>
+<p>LogNormalize的算法：</p>
+<p>A = log( 1 + ( UMIA ÷ UMITotal ) × 10000 )</p>
+<p>得到的结果存储在：<code>pbmc[[&quot;RNA&quot;]]@data</code> </p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; pbmc &lt;- NormalizeData(pbmc, normalization.method = <span class="string">"LogNormalize"</span>, scale.factor = <span class="number">10000</span>)</span><br><span class="line"><span class="comment"># 默认参数，所以省略也可以</span></span><br><span class="line"><span class="comment"># pbmc &lt;- NormalizeData(pbmc)</span></span><br></pre></td></tr></table></figure>
+<p>鉴定表达高变基因HVGs (highly variable features),</p>
+<blockquote>
+<p>在细胞与细胞间进行比较，选择表达量差别最大的(也即是同一个基因在有的细胞中表达量很高，同时在部分细胞中表达很少)</p>
+<p>利用<code>FindVariableFeatures</code>函数，会计算一个<code>mean-variance</code>结果，也就是给出表达量均值和方差的关系并且得到<code>top variable features</code></p>
+<p>2000个，用于下游分析,如PCA</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; pbmc &lt;- FindVariableFeatures(pbmc, selection.method = <span class="string">"vst"</span>, nfeatures = <span class="number">2000</span>)</span><br></pre></td></tr></table></figure>
+<p>提取表达量变变化最高的10个基因</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; top10 &lt;- head(VariableFeatures(pbmc), <span class="number">10</span>)</span><br><span class="line">&gt; top10</span><br><span class="line"> [<span class="number">1</span>] <span class="string">"PPBP"</span>   <span class="string">"LYZ"</span>    <span class="string">"S100A9"</span> <span class="string">"IGLL5"</span>  <span class="string">"GNLY"</span>   <span class="string">"FTL"</span>    <span class="string">"PF4"</span>    <span class="string">"FTH1"</span>   <span class="string">"GNG11"</span>  <span class="string">"S100A8"</span></span><br></pre></td></tr></table></figure>
+<p>画图</p>
+<blockquote>
+<p>左图：把pbmc全部基因画出来，红色是2000个HVGs</p>
+<p>右图：在左图基础上标出表达量变变化最高的10个基因</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plot1 &lt;- VariableFeaturePlot(pbmc)</span><br><span class="line">plot2 &lt;- LabelPoints(plot = plot1, points = top10, repel = TRUE)</span><br><span class="line">CombinePlots(plots = list(plot1, plot2))</span><br></pre></td></tr></table></figure>
+<p><img src="/pic/Rplot_VariableFeaturePlot_Top10HVGs.png" alt="Rplot_VariableFeaturePlot_Top10HVGs"></p>
+</li>
+<li><p>降维</p>
+<p>数据标准化：零中心化</p>
+<blockquote>
+<p>目的是对数据进行线性转换（scaling），是降维处理（如PCA）之前的标准预处理步骤。 </p>
+<p>使用ScaleData()函数：</p>
+<p>center: 将每个基因在所有细胞的表达量都减去均值，使得每个基因在所有细胞的表达量<strong>均值为0</strong></p>
+<p>scale: 将center后每个基因的表达量除以标准差，让每个基因在所有细胞中的表达量<strong>方差为1</strong></p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## ScaleData()默认只是标准化高变基因（2000个）,速度更快,不影响PCA和分群,但影响热图的绘制。</span></span><br><span class="line"><span class="comment"># pbmc &lt;- ScaleData(pbmc,vars.to.regress ="percent.mt") </span></span><br><span class="line"><span class="comment">## 而对所有基因进行标准化的方法如下：</span></span><br><span class="line">&gt; all.genes &lt;- rownames(pbmc)</span><br><span class="line">&gt; pbmc &lt;- ScaleData(pbmc, features = all.genes)</span><br></pre></td></tr></table></figure>
+<p>移除不想要的差异来源</p>
+<blockquote>
+<p>如果要移除不想要的差异来源，可以用vars.to.regress</p>
+<p>这个例子里移除了线粒体</p>
+<p>更进一步的误差排除可以用另一个专业版函数：<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fsatijalab.org%2Fseurat%2Fv3.0%2Fsctransform_vignette.html" target="_blank" rel="noopener">SCTransform</a>，它也包含<code>vars.to.regress</code>这个选项。</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; pbmc &lt;- ScaleData(pbmc, vars.to.regress = <span class="string">"percent.mt"</span>)</span><br></pre></td></tr></table></figure>
+<p>线性降维：PCA</p>
+<blockquote>
+<p>RunPCA：</p>
+<p>默认input用高变基因集，但也可通过features参数自己指定</p>
+<p>默认主成分数量是选50个</p>
+<p> 结果保存在reductions 这个接口中</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; pbmc &lt;- RunPCA(pbmc, features = VariableFeatures(object = pbmc))</span><br></pre></td></tr></table></figure>
+<p>检查PCA分群结果</p>
+<blockquote>
+<p>打印前5个PC，每个PC显示5个基因</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## RunPCA结果保存在reductions这个接口中</span></span><br><span class="line"><span class="comment"># print(pbmc@reductions$pca, dims = 1:3, nfeatures = 5)</span></span><br><span class="line">&gt; print(pbmc[[<span class="string">"pca"</span>]], dims = <span class="number">1</span>:<span class="number">5</span>, nfeatures = <span class="number">5</span>)</span><br><span class="line">PC_ <span class="number">1</span> </span><br><span class="line">Positive:  FTL, FTH1, CST3, AIF1, S100A4 </span><br><span class="line">Negative:  MALAT1, IL32, LTB, IL7R, CCL5 </span><br><span class="line">PC_ <span class="number">2</span> </span><br><span class="line">Positive:  S100A8, S100A9, LYZ, CD14, LGALS2 </span><br><span class="line">Negative:  B2M, NKG7, GZMA, CTSW, PRF1 </span><br><span class="line">PC_ <span class="number">3</span> </span><br><span class="line">Positive:  CD74, HLA-DRA, HLA-DPB1, HLA-DQA1, HLA-DQB1 </span><br><span class="line">Negative:  PPBP, GNG11, SPARC, PF4, AP001189.4 </span><br><span class="line">PC_ <span class="number">4</span> </span><br><span class="line">Positive:  CD74, HLA-DQA1, HLA-DQB1, HLA-DQA2, HLA-DRA </span><br><span class="line">Negative:  FCGR3A, FTL, RP11-290F20.3, S100A4, NKG7 </span><br><span class="line">PC_ <span class="number">5</span> </span><br><span class="line">Positive:  FCGR3A, RP11-290F20.3, MS4A7, MALAT1, CKB </span><br><span class="line">Negative:  NKG7, LYZ, S100A9, S100A8, GNLY</span><br></pre></td></tr></table></figure>
+<p>展示主成分基因分值</p>
+<blockquote>
+<p>展示前两个PC里主成分基因的值</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; VizDimLoadings(pbmc, dims = <span class="number">1</span>:<span class="number">2</span>, reduction = <span class="string">"pca"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/pic/VizDimLoading.png" alt="VizDimLoading"></p>
+<p>可视化降维后的结果</p>
+<blockquote>
+<p>DimPlot:</p>
+<p>默认提取前两个主成分，可以通过<code>dim</code>选项修改，绘制散点图</p>
+<p>图中的每个点代表一个样本。</p>
+<p><code>reduction</code>指定降维方式类型，如果不指定，默认先搜索顺序umap-&gt;tsne-&gt;pca</p>
+<p>目前用的是PCA的结果</p>
+<p>降维后的数据在 <code>cell.embeddings</code>中，可以打印出来</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; DimPlot(pbmc, reduction = <span class="string">"pca"</span>)</span><br><span class="line">&gt; head(pbmc[[<span class="string">'pca'</span>]]@cell.embeddings)[<span class="number">1</span>:<span class="number">2</span>,<span class="number">1</span>:<span class="number">2</span>]</span><br><span class="line">                     PC_1       PC_2</span><br><span class="line">AAACATACAACCAC -<span class="number">4.2153796</span> -<span class="number">0.8006517</span></span><br><span class="line">AAACATTGAGCTAC  <span class="number">0.9503998</span> -<span class="number">3.0434884</span></span><br></pre></td></tr></table></figure>
+<p><img src="/pic/DimPlot.png" alt="DimPlot"></p>
+<p>画第一个主成分的热图</p>
+<blockquote>
+<p>默认画前30个基因，可以通过nFeatures设置</p>
+<p>dim：选哪几个主成分</p>
+<p>cells：细胞数</p>
+<p>balanced：TRUE表示正负得分的基因各占一半</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; DimHeatmap(pbmc, dims = <span class="number">1</span>, cells = <span class="number">500</span>, balanced = <span class="literal">TRUE</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/pic/DimHeatMap1.png" alt="DimHeatMap1"></p>
+<p>画第1到15个主成分的热图</p>
+<p><img src="/pic/DimHeatMap15.png" alt="DimHeatMap15"></p>
+<p>查看主成分贡献度</p>
+<blockquote>
+<p>ElbowPlot画肘部图</p>
+<p>主要关注”肘部“的PC，它是一个转折点，选用转折点之前的PC就可以比较好地代表总体变化。</p>
+<p>从下图可以看出可以选择前10个PC</p>
+<p>在选择此参数时,建议选择偏高的数字（为了获取更多的稀有分群,“宁滥勿缺”）；有些亚群很罕见,如果没有先验知识,很难将这种大小的数据集与背景噪声区分开来。</p>
+</blockquote>
+<p><img src="/pic/ElbowPlot.png" alt="ElbowPlot"></p>
+<p>非线性降维：UMAP/tSNE</p>
+<blockquote>
+<p><strong>性降维PCA（1933）</strong>一个特点就是：它将高维中不相似的数据点放在较低维度时，会尽可能多地保留原始数据的差异，因此导致这些不相似的数据相距甚远，大多的数据重叠放置<br><strong>tSNE（2008）兼顾了高维降维+低维</strong>展示，降维后的那些不相似的数据点依然可以放得靠近一些，保证了点既在局部分散，又在全局聚集<br><strong>UMAP（2018）</strong>相比tSNE又能展示更多的维度：<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fsci-hub.tw%2Fhttps%3A%2F%2Fdoi.org%2F10.1038%2Fnbt.4314" target="_blank" rel="noopener">参考文献</a></p>
+<p>Seurat里要用tSNE要先计算PCA。Seurat下游的分群只需要PCA降维结果就可以，但是用tSNE的话，二维显示的图比较好看。</p>
+</blockquote>
+<p> Tsne降维并可视化</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; pbmc &lt;- RunTSNE(pbmc, dims = <span class="number">1</span>:<span class="number">10</span>)</span><br><span class="line">&gt; head(pbmc[[<span class="string">'tsne'</span>]]@cell.embeddings)[<span class="number">1</span>:<span class="number">2</span>,<span class="number">1</span>:<span class="number">2</span>]</span><br><span class="line">                  tSNE_1    tSNE_2</span><br><span class="line">AAACATACAACCAC -<span class="number">10.99287</span>  <span class="number">13.52608</span></span><br><span class="line">AAACATTGAGCTAC -<span class="number">28.57216</span> -<span class="number">27.23769</span></span><br><span class="line">DimPlot(pbmc,reduction = <span class="string">"tsne"</span>,label = <span class="literal">TRUE</span>,pt.size = <span class="number">1.5</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>![Rplot_tsne](/pic/Rplot_tsne.png)
+</code></pre><p>  Umap降维并可视化</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; pbmc &lt;- RunUMAP(pbmc, dims = <span class="number">1</span>:<span class="number">10</span>)</span><br><span class="line">&gt; head(pbmc[[<span class="string">'umap'</span>]]@cell.embeddings)[<span class="number">1</span>:<span class="number">2</span>,<span class="number">1</span>:<span class="number">2</span>]</span><br><span class="line">                UMAP_1     UMAP_2</span><br><span class="line">   AAACATACAACCAC <span class="number">3.784667</span>   <span class="number">3.790803</span></span><br><span class="line">   AAACATTGAGCTAC <span class="number">1.231294</span> -<span class="number">10.622349</span></span><br><span class="line">&gt; DimPlot(pbmc,reduction = <span class="string">"umap"</span>,label = <span class="literal">TRUE</span>,pt.size = <span class="number">1.5</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/pic/Rplot_umap.png" alt="Rplot_umap"></p>
+</li>
+<li><p>基于图的集群</p>
+<p>计算权重</p>
+<blockquote>
+<p><code>FindNeighbors</code>是基于图的</p>
+<p>input是之前降维确定的主成分(这里选用了前10个)</p>
+<p>根据PCA的结果，构建KNN图，得出近邻构成的小社区</p>
+<p>在小社区内，计算细胞两两之间的联系数（shared overlap）得到每条边的权重(Jaccard similarity)</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; pbmc &lt;- FindNeighbors(pbmc, dims = <span class="number">1</span>:<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<p>聚类</p>
+<blockquote>
+<p><code>FindClusters</code>默认使用Louvain算法</p>
+<p>resolution参数决定下游聚类分析得到的分群数,对于3K左右的细胞,设为0.4-1.2 能得到较好的结果(官方说明)；如果数据量增大,该参数也应该适当增大。</p>
+<p>resolution可以理解为分辨率，如果分辨率越高，看得越清晰，分群数目就越多。</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; pbmc &lt;- FindClusters(pbmc, resolution = <span class="number">0.5</span>)</span><br></pre></td></tr></table></figure>
+<p>查看结果</p>
+<blockquote>
+<p><code>Idents</code>可以看出不同细胞的分群</p>
+<p>例子打印了前五个细胞结果</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AAACATACAACCAC AAACATTGAGCTAC AAACATTGATCAGC AAACCGTGCTTCCG AAACCGTGTATGCG </span><br><span class="line">             4              3              0              2              4 </span><br><span class="line">Levels: 0 1 2 3 4 5 6 7 8 9</span><br></pre></td></tr></table></figure>
+<p>可视化</p>
+<blockquote>
+<p>本例基于tsne降维结果，不同颜色表示不同的群</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; DimPlot(pbmc,reduction = <span class="string">"tsne"</span>,label = <span class="literal">TRUE</span>,pt.size = <span class="number">1.5</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/pic/Rplot_cluster_tsne.png" alt="Rplot_cluster_tsne"></p>
+</li>
+<li><p>识别差异表达基因（cluster biomarker）</p>
+<p>识别cluster1中的marker基因</p>
+<blockquote>
+<p><code>`FindAllMarkers()</code> 在细胞群之间比较，找到每个细胞群的正、负表达biomarker</p>
+<p>正负可以理解为上调、下调的意思；正marker表示在这个cluster中表达量高，而在其他的cluster中低；负marker表示在这个cluster中表达量低，而在其他的cluster中高</p>
+<p><code>ident.1</code>：第一个群</p>
+<p><code>ident.2</code>：第二个群，如果不填就认为是除了第一个群之外的所有其他群的集合</p>
+<p><code>min.pct</code>：基因在任何两群细胞中的占比最低不能低于多少</p>
+<p>其他可选参数，还有结果每列的含义等详见<a href="https://satijalab.org/seurat/v3.0/de_vignette.html" target="_blank" rel="noopener">文档</a></p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; cluster1.markers &lt;- FindMarkers(pbmc, ident.1 = <span class="number">1</span>, min.pct = <span class="number">0.25</span>)</span><br><span class="line">&gt; head(cluster1.markers, n = <span class="number">5</span>)</span><br><span class="line">            p_val  avg_logFC pct.1 pct.2    p_val_adj</span><br><span class="line">CYBA <span class="number">3.392038e-97</span>  -<span class="number">50.92599</span> <span class="number">0.613</span> <span class="number">0.900</span> <span class="number">4.651841e-93</span></span><br><span class="line">CD74 <span class="number">2.543403e-91</span> -<span class="number">203.51709</span> <span class="number">0.641</span> <span class="number">0.890</span> <span class="number">3.488023e-87</span></span><br><span class="line">ACTB <span class="number">1.818148e-84</span> -<span class="number">186.51617</span> <span class="number">0.982</span> <span class="number">0.995</span> <span class="number">2.493408e-80</span></span><br><span class="line">OAZ1 <span class="number">2.698853e-79</span>  -<span class="number">47.51709</span> <span class="number">0.777</span> <span class="number">0.943</span> <span class="number">3.701207e-75</span></span><br><span class="line">FTH1 <span class="number">5.527059e-79</span> -<span class="number">370.51704</span> <span class="number">0.980</span> <span class="number">0.992</span> <span class="number">7.579808e-75</span></span><br></pre></td></tr></table></figure>
+<p>识别每个cluster的maker基因，每个cluster取前两个maker保存到本地</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##寻找每一cluster的marker</span></span><br><span class="line">&gt; pbmc.markers &lt;- FindAllMarkers(pbmc, only.pos = <span class="literal">TRUE</span>, min.pct = <span class="number">0.25</span>, logfc.threshold = <span class="number">0.25</span>)</span><br><span class="line"><span class="comment">##每组取前两个marker</span></span><br><span class="line">&gt; pbmc.markers.top &lt;- pbmc.markers %&gt;% group_by(cluster) %&gt;% top_n(n = <span class="number">2</span>, wt = avg_logFC)</span><br><span class="line"><span class="comment">##存储marker</span></span><br><span class="line">&gt; write.table(pbmc.markers,file=<span class="string">"./output/allmarker.txt"</span>)</span><br><span class="line">&gt; write.table(pbmc.markers.top,file=<span class="string">"./output/topmarker.txt"</span>)</span><br></pre></td></tr></table></figure>
+<p>比较cluster5和cluster0、cluster3的marker基因</p>
+<blockquote>
+<p>ident.2 = c（0，3)说明把cluster0、cluster3合并作为一个群</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; cluster5.markers &lt;- FindMarkers(pbmc, ident.1 = <span class="number">5</span>, ident.2 = c(<span class="number">0</span>, <span class="number">3</span>), min.pct = <span class="number">0.25</span>)</span><br><span class="line">&gt; head(cluster5.markers, n = <span class="number">5</span>)</span><br><span class="line">                      p_val avg_logFC pct.1 pct.2     p_val_adj</span><br><span class="line">CFD           <span class="number">1.444184e-208</span> <span class="number">12.930168</span> <span class="number">0.956</span> <span class="number">0.032</span> <span class="number">1.980554e-204</span></span><br><span class="line">FCGR3A        <span class="number">1.905989e-199</span> <span class="number">20.996601</span> <span class="number">0.975</span> <span class="number">0.049</span> <span class="number">2.613873e-195</span></span><br><span class="line">RP11-290F20.3 <span class="number">3.500106e-199</span>  <span class="number">4.916265</span> <span class="number">0.875</span> <span class="number">0.018</span> <span class="number">4.800046e-195</span></span><br><span class="line">IFITM3        <span class="number">1.752032e-198</span> <span class="number">49.819631</span> <span class="number">0.981</span> <span class="number">0.052</span> <span class="number">2.402737e-194</span></span><br><span class="line">CD68          <span class="number">1.486609e-196</span>  <span class="number">5.804065</span> <span class="number">0.950</span> <span class="number">0.042</span> <span class="number">2.038735e-192</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可视化</p>
+<p><code>FeaturePlot</code></p>
+<blockquote>
+<p>最常用的可视化</p>
+<p>将基因表达量投射到降维聚类结果中 </p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; FeaturePlot(pbmc, features = c(<span class="string">"MS4A1"</span>, <span class="string">"GNLY"</span>, <span class="string">"CD3E"</span>, <span class="string">"CD14"</span>, <span class="string">"FCER1A"</span>, <span class="string">"FCGR3A"</span>, <span class="string">"LYZ"</span>, <span class="string">"PPBP"</span>, <span class="string">"CD8A"</span>),cols = c(<span class="string">"gray"</span>, <span class="string">"red"</span>))</span><br></pre></td></tr></table></figure>
+<p><img src="/pic/FeaturePlot.png" alt="FeaturePlot"></p>
+<p>小提琴图<code>VlnPlot</code></p>
+<blockquote>
+<p>展示某些基因在所有细胞群的表达量</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; VlnPlot(pbmc, features = c(<span class="string">"MS4A1"</span>, <span class="string">"CD79A"</span>))</span><br><span class="line">&gt; VlnPlot(pbmc, features = c(<span class="string">"NKG7"</span>, <span class="string">"PF4"</span>), slot = <span class="string">"counts"</span>, log = <span class="literal">TRUE</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/pic/Rplot_vln.png" alt="Rplot_vln"></p>
+<p><img src="/pic/Rplot_vln2.png" alt="Rplot_vln2"></p>
+<p>热图<code>DoHeatmap</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## 每个细胞群选前十个基因，所以一共有100个基因</span><br><span class="line">&gt; top10 &lt;- pbmc.markers %&gt;% group_by(cluster) %&gt;% top_n(n = 10, wt = avg_logFC)</span><br><span class="line">&gt; DoHeatmap(pbmc, features = top10$gene) + NoLegend()</span><br></pre></td></tr></table></figure>
+<p><img src="/pic/DoHeatMap.png" alt="DoHeatMap"></p>
+<p>气泡图<code>DotPlot</code></p>
+<blockquote>
+<p>y轴是细胞群</p>
+<p>颜色表示平均表达量</p>
+<p>大小表示表达的基因个数占总个数的百分比</p>
+</blockquote>
+<p><img src="/pic/DotPlot.png" alt="DotPlot"></p>
+<p>山脊图<code>RidgePlot</code></p>
+<blockquote>
+<p>x轴是表达量，y轴是细胞群</p>
+<p>feature1的(x,y)位置山脊高说明feature1基因在y细胞群，表达量为x的细胞很多</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RidgePlot(pbmc, features = c(&quot;MS4A1&quot;, &quot;GNLY&quot;, &quot;CD3E&quot;, &quot;CD14&quot;), ncol = 2)</span><br></pre></td></tr></table></figure>
+<p><img src="/pic/Ridge_Plot.png" alt="Ridge_Plot"></p>
+</li>
+<li><p>判断细胞类型</p>
+<p>根据每个群找出来的biomarker来判断每个细胞群的细胞类型。</p>
+<p>需要结合额外的背景知识，可以查阅文献和数据库<a href="http://biocc.hrbmu.edu.cn/CellMarker/" target="_blank" rel="noopener">CellMarker</a>。</p>
+<p>官网给出的背景知识：</p>
+<p>| Cluster ID | Markers       | Cell Type    |<br>| :————- | :—————— | :—————- |<br>| 0          | IL7R, CCR7    | Naive CD4+ T |<br>| 1          | IL7R, S100A4  | Memory CD4+  |<br>| 2          | CD14, LYZ     | CD14+ Mono   |<br>| 3          | MS4A1         | B            |<br>| 4          | CD8A          | CD8+ T       |<br>| 5          | FCGR3A, MS4A7 | FCGR3A+ Mono |<br>| 6          | GNLY, NKG7    | NK           |<br>| 7          | FCER1A, CST3  | DC           |<br>| 8          | PPBP          | Platelet     |</p>
+<p>给群添加细胞类型标签(Cell Type)</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; new.cluster.ids &lt;- c(<span class="string">"Naive CD4 T"</span>, <span class="string">"Memory CD4 T"</span>, <span class="string">"CD14+ Mono"</span>, <span class="string">"B"</span>, <span class="string">"CD8 T"</span>, <span class="string">"FCGR3A+ Mono"</span>, <span class="string">"NK"</span>, <span class="string">"DC"</span>, <span class="string">"Platelet"</span>)</span><br><span class="line">names(new.cluster.ids) &lt;- levels(pbmc)</span><br><span class="line">&gt; pbmc &lt;- RenameIdents(pbmc, new.cluster.ids)</span><br><span class="line">&gt; DimPlot(pbmc, reduction = <span class="string">"tsne"</span>, label = <span class="literal">TRUE</span>, pt.size = <span class="number">1.5</span>) + NoLegend()</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>上面的代码是会报错的，因为我的分群结果是10个，但标签只有9个。</p>
+<p>官网的分群结果是9个，背景知识表格给的也是9个，所以例子里的标签也是9个。</p>
+<p>至于为什么一样的数据，一样的代码，一样的参数，结果确不一样呢？Who Knows. </p>
+<p>不是真的研究数据所以不想做背景Research了，代码意会一下。</p>
+<p>下一个教程会用一个自动注释的R包SingleR来添加标签。</p>
+</blockquote>
+<ol>
+<li><p>保存数据</p>
+<p>存储细胞归类结果</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; saveRDS(pbmc, file = <span class="string">"./output/pbmc3k_final.rds"</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>Ref：</p>
+<p>[1] <a href="https://www.jianshu.com/p/beca2faf94f7" target="_blank" rel="noopener">单细胞Seurat包升级之2,700 PBMCs分析（上）</a></p>
+<p>[2] <a href="https://www.jianshu.com/p/b46b6b6d344f" target="_blank" rel="noopener">单细胞Seurat包升级之2,700 PBMCs分析（下）</a></p>
+<p>[3] <a href="https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html" target="_blank" rel="noopener">Seurat - Guided Clustering Tutorial</a></p>
+<p>[4] <a href="http://www.360doc.com/content/19/0906/16/65172408_859509927.shtml" target="_blank" rel="noopener">一文读懂单细胞测序分析流程</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/30/车牌识别-TensorFlow-(1-克隆运行)/" rel="next" title="车牌识别-TensorFlow (1-克隆运行)">
+                <i class="fa fa-chevron-left"></i> 车牌识别-TensorFlow (1-克隆运行)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/13/Monocle/" rel="prev" title="Monocle拟时分析">
+                Monocle拟时分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Jie Wang</p>
+              <p class="site-description motion-element" itemprop="description">太阳强烈 水波温柔</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/WJie12" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:summerwangjie@outlook.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WJie12</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
