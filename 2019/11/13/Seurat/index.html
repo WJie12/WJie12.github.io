@@ -176,7 +176,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">hexo clean</p>
+        <p class="site-subtitle">Blog from Jie Wang</p>
       
   </div>
 
@@ -206,16 +206,6 @@
         </li>
       
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/%20" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-about">
           <a href="/about/%20" rel="section">
             
@@ -226,12 +216,32 @@
         </li>
       
         
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-categories">
           <a href="/categories/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
           </a>
         </li>
       
@@ -359,8 +369,8 @@
       
         <ol>
 <li><p>前言</p>
-<p> 数据：10X官方提供的<a href="https://s3-us-west-2.amazonaws.com/10x.files/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz" target="_blank" rel="noopener">PBMC数据集</a>，2700个外周血单核细胞（PBMC，Peripheral Blood Mononuclear Cells）公共数据，使用Illumina NextSeq 500测序。</p>
-<p> 原始教程和代码：<a href="https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html" target="_blank" rel="noopener">Seurat - Guided Clustering Tutorial</a></p>
+<p> 数据：10X官方提供的<a href="https://s3-us-west-2.amazonaws.com/10x.files/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz">PBMC数据集</a>，2700个外周血单核细胞（PBMC，Peripheral Blood Mononuclear Cells）公共数据，使用Illumina NextSeq 500测序。</p>
+<p> 原始教程和代码：<a href="https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html">Seurat - Guided Clustering Tutorial</a></p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hg19</span><br><span class="line">|__barcodes.tsv</span><br><span class="line">|__genes.tsv</span><br><span class="line">|__matrix.mtx</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>数据读取</p>
@@ -442,7 +452,7 @@
 <p>左图：把pbmc全部基因画出来，红色是2000个HVGs</p>
 <p>右图：在左图基础上标出表达量变变化最高的10个基因</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plot1 &lt;- VariableFeaturePlot(pbmc)</span><br><span class="line">plot2 &lt;- LabelPoints(plot = plot1, points = top10, repel = TRUE)</span><br><span class="line">CombinePlots(plots = list(plot1, plot2))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plot1 &lt;- VariableFeaturePlot(pbmc)</span><br><span class="line">plot2 &lt;- LabelPoints(plot &#x3D; plot1, points &#x3D; top10, repel &#x3D; TRUE)</span><br><span class="line">CombinePlots(plots &#x3D; list(plot1, plot2))</span><br></pre></td></tr></table></figure>
 <p><img src="/pic/Rplot_VariableFeaturePlot_Top10HVGs.png" alt="Rplot_VariableFeaturePlot_Top10HVGs"></p>
 </li>
 <li><p>降维</p>
@@ -458,7 +468,7 @@
 <blockquote>
 <p>如果要移除不想要的差异来源，可以用vars.to.regress</p>
 <p>这个例子里移除了线粒体</p>
-<p>更进一步的误差排除可以用另一个专业版函数：<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fsatijalab.org%2Fseurat%2Fv3.0%2Fsctransform_vignette.html" target="_blank" rel="noopener">SCTransform</a>，它也包含<code>vars.to.regress</code>这个选项。</p>
+<p>更进一步的误差排除可以用另一个专业版函数：<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fsatijalab.org%2Fseurat%2Fv3.0%2Fsctransform_vignette.html">SCTransform</a>，它也包含<code>vars.to.regress</code>这个选项。</p>
 </blockquote>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; pbmc &lt;- ScaleData(pbmc, vars.to.regress = <span class="string">"percent.mt"</span>)</span><br></pre></td></tr></table></figure>
 <p>线性降维：PCA</p>
@@ -512,7 +522,7 @@
 <p><img src="/pic/ElbowPlot.png" alt="ElbowPlot"></p>
 <p>非线性降维：UMAP/tSNE</p>
 <blockquote>
-<p><strong>性降维PCA（1933）</strong>一个特点就是：它将高维中不相似的数据点放在较低维度时，会尽可能多地保留原始数据的差异，因此导致这些不相似的数据相距甚远，大多的数据重叠放置<br><strong>tSNE（2008）兼顾了高维降维+低维</strong>展示，降维后的那些不相似的数据点依然可以放得靠近一些，保证了点既在局部分散，又在全局聚集<br><strong>UMAP（2018）</strong>相比tSNE又能展示更多的维度：<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fsci-hub.tw%2Fhttps%3A%2F%2Fdoi.org%2F10.1038%2Fnbt.4314" target="_blank" rel="noopener">参考文献</a></p>
+<p><strong>性降维PCA（1933）</strong>一个特点就是：它将高维中不相似的数据点放在较低维度时，会尽可能多地保留原始数据的差异，因此导致这些不相似的数据相距甚远，大多的数据重叠放置<br><strong>tSNE（2008）兼顾了高维降维+低维</strong>展示，降维后的那些不相似的数据点依然可以放得靠近一些，保证了点既在局部分散，又在全局聚集<br><strong>UMAP（2018）</strong>相比tSNE又能展示更多的维度：<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fsci-hub.tw%2Fhttps%3A%2F%2Fdoi.org%2F10.1038%2Fnbt.4314">参考文献</a></p>
 <p>Seurat里要用tSNE要先计算PCA。Seurat下游的分群只需要PCA降维结果就可以，但是用tSNE的话，二维显示的图比较好看。</p>
 </blockquote>
 <p> Tsne降维并可视化</p>
@@ -559,7 +569,7 @@
 <p><code>ident.1</code>：第一个群</p>
 <p><code>ident.2</code>：第二个群，如果不填就认为是除了第一个群之外的所有其他群的集合</p>
 <p><code>min.pct</code>：基因在任何两群细胞中的占比最低不能低于多少</p>
-<p>其他可选参数，还有结果每列的含义等详见<a href="https://satijalab.org/seurat/v3.0/de_vignette.html" target="_blank" rel="noopener">文档</a></p>
+<p>其他可选参数，还有结果每列的含义等详见<a href="https://satijalab.org/seurat/v3.0/de_vignette.html">文档</a></p>
 </blockquote>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; cluster1.markers &lt;- FindMarkers(pbmc, ident.1 = <span class="number">1</span>, min.pct = <span class="number">0.25</span>)</span><br><span class="line">&gt; head(cluster1.markers, n = <span class="number">5</span>)</span><br><span class="line">            p_val  avg_logFC pct.1 pct.2    p_val_adj</span><br><span class="line">CYBA <span class="number">3.392038e-97</span>  -<span class="number">50.92599</span> <span class="number">0.613</span> <span class="number">0.900</span> <span class="number">4.651841e-93</span></span><br><span class="line">CD74 <span class="number">2.543403e-91</span> -<span class="number">203.51709</span> <span class="number">0.641</span> <span class="number">0.890</span> <span class="number">3.488023e-87</span></span><br><span class="line">ACTB <span class="number">1.818148e-84</span> -<span class="number">186.51617</span> <span class="number">0.982</span> <span class="number">0.995</span> <span class="number">2.493408e-80</span></span><br><span class="line">OAZ1 <span class="number">2.698853e-79</span>  -<span class="number">47.51709</span> <span class="number">0.777</span> <span class="number">0.943</span> <span class="number">3.701207e-75</span></span><br><span class="line">FTH1 <span class="number">5.527059e-79</span> -<span class="number">370.51704</span> <span class="number">0.980</span> <span class="number">0.992</span> <span class="number">7.579808e-75</span></span><br></pre></td></tr></table></figure>
 <p>识别每个cluster的maker基因，每个cluster取前两个maker保存到本地</p>
@@ -586,7 +596,7 @@
 <p><img src="/pic/Rplot_vln.png" alt="Rplot_vln"></p>
 <p><img src="/pic/Rplot_vln2.png" alt="Rplot_vln2"></p>
 <p>热图<code>DoHeatmap</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## 每个细胞群选前十个基因，所以一共有100个基因</span><br><span class="line">&gt; top10 &lt;- pbmc.markers %&gt;% group_by(cluster) %&gt;% top_n(n = 10, wt = avg_logFC)</span><br><span class="line">&gt; DoHeatmap(pbmc, features = top10$gene) + NoLegend()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## 每个细胞群选前十个基因，所以一共有100个基因</span><br><span class="line">&gt; top10 &lt;- pbmc.markers %&gt;% group_by(cluster) %&gt;% top_n(n &#x3D; 10, wt &#x3D; avg_logFC)</span><br><span class="line">&gt; DoHeatmap(pbmc, features &#x3D; top10$gene) + NoLegend()</span><br></pre></td></tr></table></figure>
 <p><img src="/pic/DoHeatMap.png" alt="DoHeatMap"></p>
 <p>气泡图<code>DotPlot</code></p>
 <blockquote>
@@ -600,18 +610,16 @@
 <p>x轴是表达量，y轴是细胞群</p>
 <p>feature1的(x,y)位置山脊高说明feature1基因在y细胞群，表达量为x的细胞很多</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RidgePlot(pbmc, features = c(&quot;MS4A1&quot;, &quot;GNLY&quot;, &quot;CD3E&quot;, &quot;CD14&quot;), ncol = 2)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RidgePlot(pbmc, features &#x3D; c(&quot;MS4A1&quot;, &quot;GNLY&quot;, &quot;CD3E&quot;, &quot;CD14&quot;), ncol &#x3D; 2)</span><br></pre></td></tr></table></figure>
 <p><img src="/pic/Ridge_Plot.png" alt="Ridge_Plot"></p>
 </li>
 <li><p>判断细胞类型</p>
 <p>根据每个群找出来的biomarker来判断每个细胞群的细胞类型。</p>
-<p>需要结合额外的背景知识，可以查阅文献和数据库<a href="http://biocc.hrbmu.edu.cn/CellMarker/" target="_blank" rel="noopener">CellMarker</a>。</p>
+<p>需要结合额外的背景知识，可以查阅文献和数据库<a href="http://biocc.hrbmu.edu.cn/CellMarker/">CellMarker</a>。</p>
 <p>官网给出的背景知识：</p>
 <p>| Cluster ID | Markers       | Cell Type    |<br>| :————- | :—————— | :—————- |<br>| 0          | IL7R, CCR7    | Naive CD4+ T |<br>| 1          | IL7R, S100A4  | Memory CD4+  |<br>| 2          | CD14, LYZ     | CD14+ Mono   |<br>| 3          | MS4A1         | B            |<br>| 4          | CD8A          | CD8+ T       |<br>| 5          | FCGR3A, MS4A7 | FCGR3A+ Mono |<br>| 6          | GNLY, NKG7    | NK           |<br>| 7          | FCER1A, CST3  | DC           |<br>| 8          | PPBP          | Platelet     |</p>
 <p>给群添加细胞类型标签(Cell Type)</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; new.cluster.ids &lt;- c(<span class="string">"Naive CD4 T"</span>, <span class="string">"Memory CD4 T"</span>, <span class="string">"CD14+ Mono"</span>, <span class="string">"B"</span>, <span class="string">"CD8 T"</span>, <span class="string">"FCGR3A+ Mono"</span>, <span class="string">"NK"</span>, <span class="string">"DC"</span>, <span class="string">"Platelet"</span>)</span><br><span class="line">names(new.cluster.ids) &lt;- levels(pbmc)</span><br><span class="line">&gt; pbmc &lt;- RenameIdents(pbmc, new.cluster.ids)</span><br><span class="line">&gt; DimPlot(pbmc, reduction = <span class="string">"tsne"</span>, label = <span class="literal">TRUE</span>, pt.size = <span class="number">1.5</span>) + NoLegend()</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
 <blockquote>
 <p>上面的代码是会报错的，因为我的分群结果是10个，但标签只有9个。</p>
 <p>官网的分群结果是9个，背景知识表格给的也是9个，所以例子里的标签也是9个。</p>
@@ -619,17 +627,17 @@
 <p>不是真的研究数据所以不想做背景Research了，代码意会一下。</p>
 <p>下一个教程会用一个自动注释的R包SingleR来添加标签。</p>
 </blockquote>
-<ol>
+</li>
 <li><p>保存数据</p>
 <p>存储细胞归类结果</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; saveRDS(pbmc, file = <span class="string">"./output/pbmc3k_final.rds"</span>)</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>Ref：</p>
-<p>[1] <a href="https://www.jianshu.com/p/beca2faf94f7" target="_blank" rel="noopener">单细胞Seurat包升级之2,700 PBMCs分析（上）</a></p>
-<p>[2] <a href="https://www.jianshu.com/p/b46b6b6d344f" target="_blank" rel="noopener">单细胞Seurat包升级之2,700 PBMCs分析（下）</a></p>
-<p>[3] <a href="https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html" target="_blank" rel="noopener">Seurat - Guided Clustering Tutorial</a></p>
-<p>[4] <a href="http://www.360doc.com/content/19/0906/16/65172408_859509927.shtml" target="_blank" rel="noopener">一文读懂单细胞测序分析流程</a></p>
+<p>[1] <a href="https://www.jianshu.com/p/beca2faf94f7">单细胞Seurat包升级之2,700 PBMCs分析（上）</a></p>
+<p>[2] <a href="https://www.jianshu.com/p/b46b6b6d344f">单细胞Seurat包升级之2,700 PBMCs分析（下）</a></p>
+<p>[3] <a href="https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html">Seurat - Guided Clustering Tutorial</a></p>
+<p>[4] <a href="http://www.360doc.com/content/19/0906/16/65172408_859509927.shtml">一文读懂单细胞测序分析流程</a></p>
 
       
     </div>
@@ -809,7 +817,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
